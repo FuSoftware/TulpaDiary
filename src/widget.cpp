@@ -11,7 +11,6 @@ Widget::Widget(QWidget *parent) : QWidget(parent)
     tabWidget = new QTabWidget(this);
 
     addEntryWidget = new AddEntryWidget(this);
-    addTulpaWidget = new AddTulpaWidget(this);
 
     tulpaWidget = new TulpaWidget(this);
 

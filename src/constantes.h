@@ -1,9 +1,10 @@
 #ifndef CONSTANTES
 #define CONSTANTES
 
-#define DEBUG 1
+#define DEBUG 0
 
-#define VERSION 0.0.1.1
+#define APP_NAME "TulpaDiary"
+#define VERSION "0.0.1.1"
 
 /*Folders*/
 #if DEBUG
