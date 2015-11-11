@@ -21,8 +21,8 @@ void AddTulpaWidget::loadTulpa(QString name)
     tulpa.loadByName(name.toStdString());
 
     this->lineEdits.at(LINE_EDIT_NAME)->setText(QString(tulpa.getName().c_str()));
-    this->lineEdits.at(LINE_EDIT_BIRTH)->setText(QString(intToDate(tulpa.getBirthTime()).c_str()));
-    this->lineEdits.at(LINE_EDIT_FIRST_WORD)->setText(QString::number(tulpa.getFirstWordTime()));
+    this->lineEdits.at(LINE_EDIT_BIRTH)->setText(QString(tulpa.getBirthTime().c_str()));
+    this->lineEdits.at(LINE_EDIT_FIRST_WORD)->setText(QString(tulpa.getFirstWordTime().c_str()));
 
     for(int i=0;i<tulpa.getPersonalityTraits().size();i++)
     {
@@ -79,23 +79,49 @@ void AddTulpaWidget::loadUI()
 
 void AddTulpaWidget::save()
 {
-    Json::Value root;
-
-    tulpa.setName(lineEdits.at(LINE_EDIT_NAME)->text().toStdString());
-    tulpa.setBirthTime(lineEdits.at(LINE_EDIT_BIRTH)->text().toInt());
-    tulpa.setFirstWordTime(lineEdits.at(LINE_EDIT_FIRST_WORD)->text().toInt());
-
-    std::vector<std::string> personality;
-
-    for(int i=0;i<personalityTraits.size();i++)
+    /*Checks*/
+    if(lineEdits.at(LINE_EDIT_NAME)->text().isEmpty())
     {
-        personality.push_back(personalityTraits.at(i).toStdString());
+        QMessageBox::critical(this,"Error","Please specify a name");
     }
+    else if(lineEdits.at(LINE_EDIT_BIRTH)->text().isEmpty())
+    {
+        QMessageBox::critical(this,"Error","Please specify a birth date");
+    }
+    else
+    {
+        if(lineEdits.at(LINE_EDIT_FIRST_WORD)->text().isEmpty())
+        {
+            lineEdits.at(LINE_EDIT_FIRST_WORD)->setText("Not yet answered");
+        }
+        if(personalityTraits.isEmpty())
+        {
+            QMessageBox::information(this,"Peronality","Remember to set a personality for yout Tulpa later");
+        }
 
-    tulpa.setPersonalityTraits(personality);
 
-    emit finished();
-    this->close();
+        /*Saving*/
+        tulpa.setName(lineEdits.at(LINE_EDIT_NAME)->text().toStdString());
+        tulpa.setBirthTime(lineEdits.at(LINE_EDIT_BIRTH)->text().toStdString());
+        tulpa.setFirstWordTime(lineEdits.at(LINE_EDIT_FIRST_WORD)->text().toStdString());
+
+        std::vector<std::string> personality;
+
+        for(int i=0;i<personalityTraits.size();i++)
+        {
+            personality.push_back(personalityTraits.at(i).toStdString());
+        }
+
+        tulpa.setPersonalityTraits(personality);
+
+        tulpa.generateFilePath();
+        tulpa.save();
+
+        outputInfo(L_DEBUG,std::string("Saved tulpa ") + tulpa.getName());
+
+        emit finished();
+        this->close();
+    }
 }
 
 

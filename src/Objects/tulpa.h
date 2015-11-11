@@ -21,22 +21,22 @@ public:
 
     void loadByName(std::string name);
     void save();
-
+    void generateFilePath();
     void addPersonalityTrait(std::string trait);
     void addSessions(Session session);
 
     void loadSession(int id);
 
     void setName(std::string name);
-    void setBirthTime(int time);
-    void setFirstWordTime(int time);
+    void setBirthTime(std::string time);
+    void setFirstWordTime(std::string time);
     void setPersonalityTraits(std::vector<std::string> traits);
 
     std::string getPersonalityTrait(int i);
     std::vector<std::string> getPersonalityTraits();
     std::string getName();
-    int getBirthTime();
-    int getFirstWordTime();
+    std::string getBirthTime();
+    std::string getFirstWordTime();
     std::vector<Session> getSessions();
     std::vector<int> getSessionsIds();
 
@@ -45,8 +45,8 @@ private:
 
     std::string name;
 
-    int birth_time;
-    int first_word_time;
+    std::string birth_time;
+    std::string first_word_time;
 
     std::vector<std::string> personality_traits;
     std::vector<Session> sessions;

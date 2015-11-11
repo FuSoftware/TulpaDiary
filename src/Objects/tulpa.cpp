@@ -52,18 +52,34 @@ void Tulpa::loadByName(std::string name)
         i++;
     }
 
-    birth_time = root["birth_time"].asInt();
-    first_word_time = root["first_word_time"].asInt();
+    birth_time = root["birth_time"].asString();
+    first_word_time = root["first_word_time"].asString();
 }
 
 void Tulpa::save()
 {
-    root["personality_traits"];
+    Json::Value root;
+
+    for(int i=0;i<personality_traits.size();i++)
+    {
+        root["personality_traits"][i] = personality_traits.at(i);
+    }
+
+    for(int i=0;i<sessions_id.size();i++)
+    {
+        root["session_id"][i] = sessions_id.at(i);
+    }
+
     root["name"] = this->name;
     root["birth_time"] = birth_time;
     root["first_word_time"] = first_word_time;
 
     saveJSONFile(root,local_file.c_str());
+}
+
+void Tulpa::generateFilePath()
+{
+    this->local_file = std::string(TULPA_FOLDER) + this->name + std::string(".json");
 }
 
 void Tulpa::addPersonalityTrait(std::string trait)
@@ -89,11 +105,11 @@ void Tulpa::setName(std::string name)
     this->name = name;
 }
 
-void Tulpa::setBirthTime(int time)
+void Tulpa::setBirthTime(std::string time)
 {
     birth_time = time;
 }
-void Tulpa::setFirstWordTime(int time)
+void Tulpa::setFirstWordTime(std::string time)
 {
     first_word_time = time;
 }
@@ -117,11 +133,11 @@ std::vector<std::string> Tulpa::getPersonalityTraits()
     return personality_traits;
 }
 
-int Tulpa::getBirthTime()
+std::string Tulpa::getBirthTime()
 {
     return birth_time;
 }
-int Tulpa::getFirstWordTime()
+std::string Tulpa::getFirstWordTime()
 {
     return first_word_time;
 }
