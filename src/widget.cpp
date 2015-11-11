@@ -21,6 +21,10 @@ Widget::Widget(QWidget *parent) : QWidget(parent)
     setLayout(mainLayout);
 
     connect(tulpaWidget,SIGNAL(tulpa_list_changed()),this,SLOT(reload()));
+    connect(tulpaWidget,SIGNAL(show_session(int)),addEntryWidget,SLOT(load_session(int)));
+    connect(tulpaWidget,SIGNAL(show_session(int)),this,SLOT(load_session(int)));
+
+    connect(tabWidget,SIGNAL(currentChanged(int)),this,SLOT(refresh_tab(int)));
 
 }
 
@@ -33,4 +37,21 @@ void Widget::reload()
 {
     addEntryWidget->loadTulpas();
     tulpaWidget->reload();
+}
+
+void Widget::load_session(int i)
+{
+    this->tabWidget->setCurrentIndex(0);
+}
+
+void Widget::refresh_tab(int i)
+{
+    switch(i)
+    {
+    case 0:
+        break;
+    case ID_TULPAS:
+        tulpaWidget->reload();
+        break;
+    }
 }

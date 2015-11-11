@@ -7,6 +7,11 @@
 #include "Widgets/addentrywidget.h"
 #include "Widgets/tulpawidget.h"
 
+enum Indexes{
+    ID_SESSIONS = 0,
+    ID_TULPAS
+};
+
 class Widget : public QWidget
 {
     Q_OBJECT
@@ -17,6 +22,8 @@ public:
 
 public slots:
     void reload();
+    void load_session(int i);
+    void refresh_tab(int i);
 
 private:
     QVBoxLayout *mainLayout;
