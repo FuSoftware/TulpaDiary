@@ -14,7 +14,7 @@ class Session
 public:
     Session();
     Session(int id);
-    Session(int id, std::string tulpa_name, std::string session_type, std::string description, int duration, int time);
+    Session(int id, std::string tulpa_name, std::string session_type, int session_type_id, std::string description, int duration, std::string time);
     ~Session();
 
     void loadFromJSON();
@@ -23,7 +23,7 @@ public:
     std::string getTulpaName();
     std::string getType();
     std::string getDescription();
-    int getTime();
+    std::string getTime();
     int getDuration();
 
 private:
@@ -31,7 +31,7 @@ private:
     std::string tulpa_name;
     std::string session_type;
     std::string description;
-    int time;
+    std::string time;
     int duration;
 
     std::string local_file;

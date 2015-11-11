@@ -23,11 +23,12 @@ Session::Session(int id)
     }
 }
 
-Session::Session(int id, std::string tulpa_name, std::string session_type, std::string description, int duration, int time)
+Session::Session(int id, std::string tulpa_name, std::string session_type, int session_type_id, std::string description, int duration, std::string time)
 {
     local_file = std::string(SESSION_FOLDER) + intToString(id) + std::string(".json");
 
     root["id"] = id;
+    root["id_action"] = session_type_id;
     root["tulpa_name"] = tulpa_name;
     root["session_type"] = session_type;
     root["description"] = description;
@@ -49,7 +50,7 @@ void Session::loadFromJSON()
     tulpa_name = root["tulpa_name"].asString();
     session_type = root["session_type"].asString();
     description = root["description"].asString();
-    time = root["time"].asInt();
+    time = root["time"].asString();
     duration = root["duration"].asInt();
 }
 
@@ -69,7 +70,7 @@ std::string Session::getDescription()
 {
     return description;
 }
-int Session::getTime()
+std::string Session::getTime()
 {
     return time;
 }
