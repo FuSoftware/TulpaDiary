@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.4 - 2015/11/11
+- You can now load sessions from the "Tulpa" tab
+- Fixed sessions accumulating in the Tulpa tab
+
 ## 0.1.3 - 2015/11/11
 - Fixed tulpas not being refreshed in the "Sessions" tab
 

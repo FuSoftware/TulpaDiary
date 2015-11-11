@@ -4,7 +4,7 @@
 #define DEBUG 0
 
 #define APP_NAME "TulpaDiary"
-#define VERSION "0.0.1.3"
+#define VERSION "0.0.1.4"
 
 /*Folders*/
 #if DEBUG
