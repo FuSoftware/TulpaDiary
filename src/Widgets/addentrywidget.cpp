@@ -100,18 +100,29 @@ void AddEntryWidget::loadSessions()
 
 void AddEntryWidget::loadTulpas()
 {
-    QString buffer;
+    comboBoxName->clear();
+
     QDir tulpadir(TULPA_FOLDER);
     tulpadir.setFilter(QDir::Files | QDir::NoDotAndDotDot);
 
-    comboBoxName->clear();
-    for(int i=0;i<tulpadir.entryInfoList().size();i++)
-    {
-        buffer = tulpadir.entryInfoList().at(i).baseName();
-        buffer[0] = buffer[0].toUpper();
-        comboBoxName->addItem(buffer);
+    QString buffer;
+    int entry_size = tulpadir.entryList().size();
 
-        outputInfo(L_DEBUG,"Loaded Tulpa " + buffer.toStdString());
+    for(int i=0;i<entry_size;i++)
+    {
+        if (tulpadir.entryInfoList().at(i).baseName().isEmpty())
+        {
+
+        }
+        else
+        {
+            buffer = tulpadir.entryInfoList().at(i).baseName();
+            buffer[0] = buffer[0].toUpper();
+            comboBoxName->addItem(buffer);
+
+            outputInfo(L_DEBUG,"Loaded Tulpa " + buffer.toStdString());
+        }
+
     }
 
     comboBoxName->addItem("No Tulpa");

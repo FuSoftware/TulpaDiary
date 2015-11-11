@@ -15,6 +15,9 @@ public:
     Widget(QWidget *parent = 0);
     ~Widget();
 
+public slots:
+    void reload();
+
 private:
     QVBoxLayout *mainLayout;
 

@@ -96,7 +96,7 @@ void AddTulpaWidget::save()
         }
         if(personalityTraits.isEmpty())
         {
-            QMessageBox::information(this,"Peronality","Remember to set a personality for yout Tulpa later");
+            QMessageBox::information(this,"Peronality","Remember to set a personality for your Tulpa later");
         }
 
 

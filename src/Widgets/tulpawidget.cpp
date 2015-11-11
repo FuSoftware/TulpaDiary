@@ -60,11 +60,9 @@ void TulpaWidget::loadTulpas()
 
     QString buffer;
     int entry_size = tulpadir.entryList().size();
-    qDebug() << entry_size << "entries";
 
     for(int i=0;i<entry_size;i++)
     {
-        qDebug() << tulpadir.entryInfoList().at(i).absoluteFilePath();
         if (tulpadir.entryInfoList().at(i).baseName().isEmpty())
         {
 
@@ -85,14 +83,14 @@ void TulpaWidget::addTulpa()
 {
     AddTulpaWidget *w = new AddTulpaWidget(0);
     w->show();
-    connect(w,SIGNAL(finished()),this,SLOT(reload()));
+    connect(w,SIGNAL(finished()),this,SIGNAL(tulpa_list_changed()));
 }
 
 void TulpaWidget::editTulpa()
 {
     AddTulpaWidget *w = new AddTulpaWidget(comboBoxTulpa->currentText(),0);
     w->show();
-    connect(w,SIGNAL(finished()),this,SLOT(reload()));
+    connect(w,SIGNAL(finished()),this,SIGNAL(tulpa_list_changed()));
 }
 
 void TulpaWidget::reload()

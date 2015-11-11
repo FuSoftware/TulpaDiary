@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.3 - 2015/11/11
+- Fixed tulpas not being refreshed in the "Sessions" tab
+
 ## 0.1.2 - 2015/11/11
 - Fixed tulpas not being saved
 - Changed dates from integers to strings

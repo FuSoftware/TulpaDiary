@@ -20,9 +20,17 @@ Widget::Widget(QWidget *parent) : QWidget(parent)
     mainLayout->addWidget(tabWidget);
     setLayout(mainLayout);
 
+    connect(tulpaWidget,SIGNAL(tulpa_list_changed()),this,SLOT(reload()));
+
 }
 
 Widget::~Widget()
 {
 
+}
+
+void Widget::reload()
+{
+    addEntryWidget->loadTulpas();
+    tulpaWidget->reload();
 }
