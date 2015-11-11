@@ -26,6 +26,7 @@ public:
     explicit TulpaWidget(QWidget *parent = 0);
     ~TulpaWidget();
 
+    void loadTulpas();
     void loadInfos();
     void loadPersonality();
     void loadSessions();

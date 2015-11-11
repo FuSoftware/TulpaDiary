@@ -5,21 +5,9 @@ TulpaWidget::TulpaWidget(QWidget *parent) : QWidget(parent)
     outputInfo(L_DEBUG,"Loading Tulpas Widget");
 
     mainlayout = new QVBoxLayout;
-
-    QDir tulpadir(TULPA_FOLDER);
-    tulpadir.setFilter(QDir::Files);
-
     comboBoxTulpa = new QComboBox(this);
-    QString buffer;
 
-    for(int i=0;i<tulpadir.entryInfoList().size();i++)
-    {
-        buffer = tulpadir.entryInfoList().at(i).baseName();
-        buffer[0] = buffer[0].toUpper();
-        comboBoxTulpa->addItem(buffer);
-
-        outputInfo(L_DEBUG,"Loaded Tulpa " + buffer.toStdString());
-    }
+    loadTulpas();
 
     groupBoxInfos = new QGroupBox("Infos",this);
     QVBoxLayout *layoutInfos = new QVBoxLayout;
@@ -63,6 +51,36 @@ TulpaWidget::~TulpaWidget()
 
 }
 
+void TulpaWidget::loadTulpas()
+{
+    comboBoxTulpa->clear();
+
+    QDir tulpadir(TULPA_FOLDER);
+    tulpadir.setFilter(QDir::Files | QDir::NoDotAndDotDot);
+
+    QString buffer;
+    int entry_size = tulpadir.entryList().size();
+    qDebug() << entry_size << "entries";
+
+    for(int i=0;i<entry_size;i++)
+    {
+        qDebug() << tulpadir.entryInfoList().at(i).absoluteFilePath();
+        if (tulpadir.entryInfoList().at(i).baseName().isEmpty())
+        {
+
+        }
+        else
+        {
+            buffer = tulpadir.entryInfoList().at(i).baseName();
+            buffer[0] = buffer[0].toUpper();
+            comboBoxTulpa->addItem(buffer);
+
+            outputInfo(L_DEBUG,"Loaded Tulpa " + buffer.toStdString());
+        }
+
+    }
+}
+
 void TulpaWidget::addTulpa()
 {
     AddTulpaWidget *w = new AddTulpaWidget(0);
@@ -79,6 +97,8 @@ void TulpaWidget::editTulpa()
 
 void TulpaWidget::reload()
 {
+    loadTulpas();
+    //comboBoxTulpa->setCurrentIndex(0);
     loadTulpa(comboBoxTulpa->currentText());
 }
 
@@ -93,16 +113,9 @@ void TulpaWidget::loadTulpa(QString name)
 
 void TulpaWidget::loadInfos()
 {
-    labelsInfo[TULPA_BIRTH]->setText(QString("Birth : ") + QString(intToDate(tulpa.getBirthTime()).c_str()));
+    labelsInfo[TULPA_BIRTH]->setText(QString("Birth : ") + QString(tulpa.getBirthTime().c_str()));
 
-    if(tulpa.getFirstWordTime())
-    {
-        labelsInfo[TULPA_FIRST_WORD]->setText(QString("First Word : ") + QString(intToDate(tulpa.getFirstWordTime()).c_str()));
-    }
-    else
-    {
-        labelsInfo[TULPA_FIRST_WORD]->setText(QString("First Word : ") + QString("Not yet answered"));
-    }
+    labelsInfo[TULPA_FIRST_WORD]->setText(QString("First Word : ") + QString(tulpa.getFirstWordTime().c_str()));
 
 }
 
