@@ -1,6 +1,6 @@
 # TulpaDiary
 
-##Summit
+##Summary
 This software will allow you to easily manage all your past tulpaforcing sessions, and observe progress about your tulpas.
 
 ##Features
