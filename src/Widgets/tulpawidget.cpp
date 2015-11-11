@@ -102,7 +102,7 @@ void TulpaWidget::reload()
 
 void TulpaWidget::loadTulpa(QString name)
 {
-    tulpa.loadByName(name.toStdString());
+    tulpa = new Tulpa(name.toStdString());
 
     loadInfos();
     loadPersonality();
@@ -111,9 +111,9 @@ void TulpaWidget::loadTulpa(QString name)
 
 void TulpaWidget::loadInfos()
 {
-    labelsInfo[TULPA_BIRTH]->setText(QString("Birth : ") + QString(tulpa.getBirthTime().c_str()));
+    labelsInfo[TULPA_BIRTH]->setText(QString("Birth : ") + QString(tulpa->getBirthTime().c_str()));
 
-    labelsInfo[TULPA_FIRST_WORD]->setText(QString("First Word : ") + QString(tulpa.getFirstWordTime().c_str()));
+    labelsInfo[TULPA_FIRST_WORD]->setText(QString("First Word : ") + QString(tulpa->getFirstWordTime().c_str()));
 
 }
 
@@ -122,9 +122,9 @@ void TulpaWidget::loadPersonality()
     personalityList.clear();
     personalityList.push_back(QString("Personality :"));
 
-    for(int i=0;i<tulpa.getPersonalityTraits().size();i++)
+    for(int i=0;i<tulpa->getPersonalityTraits().size();i++)
     {
-        personalityList.push_back(QString("  -") + QString(tulpa.getPersonalityTrait(i).c_str()));
+        personalityList.push_back(QString("  -") + QString(tulpa->getPersonalityTrait(i).c_str()));
     }
 
     personalityModel->setStringList(personalityList);
@@ -132,18 +132,25 @@ void TulpaWidget::loadPersonality()
 
 void TulpaWidget::loadSessions()
 {
-    Session session_buffer;
-
     sessionsList.clear();
     sessionsList.push_back(QString("Sessions :"));
 
-    for(int i=0;i<tulpa.getSessions().size();i++)
+    for(int i=0;i<tulpa->getSessionsIds().size();i++)
     {
-        sessionsList.push_back(QString("  -") +QString::number(session_buffer.getId()));
+        sessionsList.push_back(QString("  ") +QString::number(tulpa->getSessionsIds().at(i)) + QString(" - ") + QString(Session(tulpa->getSessionsIds().at(i)).getTime().c_str()) + QString(" - ") + QString(Session(tulpa->getSessionsIds().at(i)).getType().c_str()));
     }
-
-
     sessionsModel->setStringList(sessionsList);
+
+    connect(sessionsView,SIGNAL(doubleClicked(QModelIndex)),this,SLOT(showSession(QModelIndex)));
+}
+
+void TulpaWidget::showSession(QModelIndex index)
+{
+    if(index.row() != 0)
+    {
+        int session_id = tulpa->getSessionsIds().at(index.row()-1); // -1 -> Title offset
+        emit show_session(session_id);
+    }
 }
 
 void TulpaWidget::clearLayout(QLayout *layout)

@@ -1,12 +1,12 @@
 #include "addentrywidget.h"
 
-#define OBJECT_NUMBER 5
+#define OBJECT_NUMBER 6
 
 AddEntryWidget::AddEntryWidget(QWidget *parent) : QWidget(parent)
 {
     outputInfo(L_DEBUG,"Loading Sessions Widget");
 
-    QString titles[OBJECT_NUMBER] = {"Session","Tulpa","Action type","Time spent (Minutes)","Detailed description"};
+    QString titles[OBJECT_NUMBER] = {"Session","Tulpa","Action type","Date","Time spent (Minutes)","Detailed description"};
     QString actions_string[ACTION_END_LIST] = {"Active Forcing (Talking)","Active Forcing (Visualisation)","Active Forcing (Both)","Passive Forcing","Meditation"};
     loaded_from_file = false;
 
@@ -28,6 +28,7 @@ AddEntryWidget::AddEntryWidget(QWidget *parent) : QWidget(parent)
     loadTulpas();
 
     lineEditTimeSpent = new QLineEdit(this);
+    lineEditDate = new QLineEdit(this);
     textEditDescription = new QTextEdit(this);
     pushButtonSave = new QPushButton("Save",this);
 
@@ -58,9 +59,12 @@ AddEntryWidget::AddEntryWidget(QWidget *parent) : QWidget(parent)
             layout[i]->addWidget(comboBoxAction);
             break;
         case 3:
-            layout[i]->addWidget(lineEditTimeSpent);
+            layout[i]->addWidget(lineEditDate);
             break;
         case 4:
+            layout[i]->addWidget(lineEditTimeSpent);
+            break;
+        case 5:
             layout[i]->addWidget(textEditDescription);
             break;
         }
@@ -79,6 +83,12 @@ AddEntryWidget::AddEntryWidget(QWidget *parent) : QWidget(parent)
 AddEntryWidget::~AddEntryWidget()
 {
 
+}
+
+void AddEntryWidget::load_session(int id)
+{
+    int index = comboBoxSelectSession->findText(QString::number(id));
+    comboBoxSelectSession->setCurrentIndex(index);
 }
 
 void AddEntryWidget::loadSessions()
@@ -150,38 +160,34 @@ void AddEntryWidget::save()
 
     Json::Value root;
 
-    root["description"] = textEditDescription->toPlainText().toStdString();
-    root["duration"] = lineEditTimeSpent->text().toInt();
-    root["id"] = atoi(fileIDBuffer.c_str());
-    root["session_type"] = comboBoxAction->currentText().toStdString();
-
-    if(!loaded_from_file)
-    {
-        root["time"] = (int)time(NULL);
-    }
-    else
-    {
-        root["time_last_update"] = (int)time(NULL);
-    }
-
-    root["tulpa_name"] = comboBoxName->currentText().toStdString();
-
-    root["id_action"] = comboBoxAction->currentIndex();
-
-    filePath = std::string(SESSION_FOLDER) + fileIDBuffer + std::string(".json");
-
-    saveJSONFile(root,filePath.c_str());
+    Session session(atoi(fileIDBuffer.c_str()),
+                    comboBoxName->currentText().toStdString(),
+                    comboBoxAction->currentText().toStdString(),
+                    comboBoxAction->currentIndex(),
+                    textEditDescription->toPlainText().toStdString(),
+                    lineEditTimeSpent->text().toInt(),
+                    lineEditDate->text().toStdString());
 
     /*Add entry to tulpa*/
     if(comboBoxName->currentIndex() < comboBoxName->count()-1)
     {
         int i=0;
-        std::string tulpa_file = std::string(TULPA_FOLDER) + comboBoxName->currentText().toStdString() + std::string(".json");
-        root = loadJSONFile(tulpa_file.c_str());
 
-        while(root["session_id"][i] != Json::nullValue){i++;}
-        root["session_id"][i] = atoi(fileIDBuffer.c_str());
-        saveJSONFile(root,tulpa_file.c_str());
+        Tulpa tulpa(comboBoxName->currentText().toStdString());
+
+        std::vector<int> v = tulpa.getSessionsIds();
+        int id = atoi(fileIDBuffer.c_str());
+
+        if(std::find(v.begin(), v.end(), id) != v.end())
+        {
+          //elem exists in the vector
+        }
+        else
+        {
+            tulpa.addSessions(session);
+        }
+
+        tulpa.save();
     }
 
     loadSessions();
@@ -202,6 +208,7 @@ void AddEntryWidget::load(QString index)
         fileIDBuffer = root["id"].asInt();
         comboBoxAction->setCurrentIndex(root["id_action"].asInt());
         comboBoxName->setCurrentText(root["tulpa_name"].asCString());
+        lineEditDate->setText(QString(root["time"].asString().c_str()));
         loaded_from_file = true;
     }
     else
@@ -210,6 +217,7 @@ void AddEntryWidget::load(QString index)
         lineEditTimeSpent->setText("Enter the spent time");
         comboBoxAction->setCurrentText("Enter the session type");
         comboBoxName->setCurrentText("Choose your Tulpa");
+        lineEditDate->setText("Enter the date");
         loaded_from_file = false;
     }
 }

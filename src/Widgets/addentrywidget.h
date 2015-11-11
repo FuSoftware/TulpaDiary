@@ -17,7 +17,7 @@ enum Actions
     ACTION_ACTIVE_T =0,
     ACTION_ACTIVE_V,
     ACTION_ACTIVE_B,
-    ACTIOn_PASSIVE,
+    ACTION_PASSIVE,
     ACTION_MEDITATION,
     ACTION_END_LIST
 };
@@ -36,6 +36,7 @@ public slots:
     void load(QString index);
     void loadSessions();
     void loadTulpas();
+    void load_session(int id);
 
 private:
 
@@ -45,6 +46,7 @@ private:
 
     QComboBox *comboBoxName;
     QComboBox *comboBoxAction;
+    QLineEdit *lineEditDate;
     QLineEdit *lineEditTimeSpent;
 
     QTextEdit *textEditDescription;

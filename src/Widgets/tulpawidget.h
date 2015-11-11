@@ -34,15 +34,17 @@ public:
     void clearLayout(QLayout *layout);
 signals:
     void tulpa_list_changed();
+    void show_session(int id);
 
 public slots:
     void loadTulpa(QString name);
     void addTulpa();
     void editTulpa();
     void reload();
+    void showSession(QModelIndex index);
 
 private:
-    Tulpa tulpa;
+    Tulpa *tulpa;
 
     QVBoxLayout *mainlayout;
 
