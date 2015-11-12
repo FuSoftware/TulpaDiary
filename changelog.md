@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.0 - 2015/11/13
+- Started building an in-app calendar
+- Added some general session-statistics in the Tulpa tab
+
 ## 0.1.4 - 2015/11/11
 - You can now load sessions from the "Tulpa" tab
 - Fixed sessions accumulating in the Tulpa tab

@@ -27,7 +27,9 @@ SOURCES += main.cpp\
     Objects/tulpa.cpp \
     Objects/session.cpp \
     Widgets/tulpawidget.cpp \
-    Widgets/addtulpawidget.cpp
+    Widgets/addtulpawidget.cpp \
+    Widgets/schedulewidget.cpp \
+    Widgets/qtulpastatistics.cpp
 
 HEADERS  += widget.h \
     json/assertions.h \
@@ -49,7 +51,10 @@ HEADERS  += widget.h \
     constantes.h \
     Objects/session.h \
     Widgets/tulpawidget.h \
-    Widgets/addtulpawidget.h
+    Widgets/addtulpawidget.h \
+    Widgets/schedulewidget.h \
+    Widgets/qtulpastatistics.h \
+    ressources.h
 
 DISTFILES += \
     json/sconscript
