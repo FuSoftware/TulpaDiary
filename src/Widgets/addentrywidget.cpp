@@ -1,13 +1,10 @@
 #include "addentrywidget.h"
 
-#define OBJECT_NUMBER 6
-
 AddEntryWidget::AddEntryWidget(QWidget *parent) : QWidget(parent)
 {
     outputInfo(L_DEBUG,"Loading Sessions Widget");
 
-    QString titles[OBJECT_NUMBER] = {"Session","Tulpa","Action type","Date","Time spent (Minutes)","Detailed description"};
-    QString actions_string[ACTION_END_LIST] = {"Active Forcing (Talking)","Active Forcing (Visualisation)","Active Forcing (Both)","Passive Forcing","Meditation"};
+
     loaded_from_file = false;
 
     mainLayout = new QVBoxLayout;

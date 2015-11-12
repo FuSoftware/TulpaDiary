@@ -12,15 +12,7 @@
 #include "fonctions_json.h"
 #include "../Objects/tulpa.h"
 
-enum Actions
-{
-    ACTION_ACTIVE_T =0,
-    ACTION_ACTIVE_V,
-    ACTION_ACTIVE_B,
-    ACTION_PASSIVE,
-    ACTION_MEDITATION,
-    ACTION_END_LIST
-};
+#include "../ressources.h"
 
 class AddEntryWidget : public QWidget
 {
