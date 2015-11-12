@@ -21,6 +21,7 @@ public:
 
     int getId();
     std::string getTulpaName();
+    int getTypeId();
     std::string getType();
     std::string getDescription();
     std::string getTime();
@@ -28,6 +29,7 @@ public:
 
 private:
     int id;
+    int session_type_id;
     std::string tulpa_name;
     std::string session_type;
     std::string description;

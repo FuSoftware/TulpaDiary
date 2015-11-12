@@ -47,6 +47,7 @@ Session::~Session()
 void Session::loadFromJSON()
 {
     this->id = root["id"].asInt();
+    this->session_type_id = root["id_action"].asInt();
     tulpa_name = root["tulpa_name"].asString();
     session_type = root["session_type"].asString();
     description = root["description"].asString();
@@ -62,6 +63,11 @@ std::string Session::getTulpaName()
 {
     return tulpa_name;
 }
+int Session::getTypeId()
+{
+    return this->session_type_id;
+}
+
 std::string Session::getType()
 {
     return session_type;
