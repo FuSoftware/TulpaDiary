@@ -32,10 +32,13 @@ TulpaWidget::TulpaWidget(QWidget *parent) : QWidget(parent)
     layoutTop->addWidget(pBEdit);
     layoutTop->addWidget(pBAdd);
 
+    stats = new QTulpaStatistics(this);
+
     mainlayout->addLayout(layoutTop);
     mainlayout->addWidget(groupBoxInfos);
     mainlayout->addWidget(personalityView);
     mainlayout->addWidget(sessionsView);
+    mainlayout->addWidget(stats);
 
     setLayout(mainlayout);
 
@@ -107,6 +110,7 @@ void TulpaWidget::loadTulpa(QString name)
     loadInfos();
     loadPersonality();
     loadSessions();
+    stats->loadTulpa(tulpa);
 }
 
 void TulpaWidget::loadInfos()

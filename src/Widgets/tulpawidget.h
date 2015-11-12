@@ -12,6 +12,8 @@
 
 #include "addtulpawidget.h"
 
+#include "qtulpastatistics.h"
+
 enum TulpaInfo
 {
     TULPA_BIRTH,
@@ -63,6 +65,8 @@ private:
 
     QList<QLabel*> labelsPersonality;
     QList<QLabel*> labelsSessions;
+
+    QTulpaStatistics *stats;
 };
 
 #endif // TULPAWIDGET_H
