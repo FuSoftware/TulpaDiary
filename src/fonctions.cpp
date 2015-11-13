@@ -108,3 +108,73 @@ std::string getFolder(std::string file_path)
 {
     return file_path.substr(0,file_path.find_last_of("/"));
 }
+
+int downloadFile(const char* url, const char* file, bool override)
+{
+    QString referer = "Dummy Ref";
+
+    if(fexists(file) && !override)
+    {
+        //File exists and we don't want to everride
+        return 0;
+    }
+    else
+    {
+        //Getting redirection
+
+        QUrl file_url = findRedirection(QUrl(QString(url)));
+
+        //Synchronous download
+        QNetworkAccessManager *manager = new QNetworkAccessManager;
+        QNetworkRequest request;
+
+
+        request.setUrl(file_url.toString());
+        request.setRawHeader("User-Agent", "QBooru");
+        //request.setRawHeader("Referer", referer);
+
+        QNetworkReply* m_pReply = manager->get(request);
+
+        QEventLoop loop;
+        QObject::connect(m_pReply, SIGNAL(finished()),&loop, SLOT(quit()));
+        loop.exec();
+
+        //qDebug() << "Loop finished";
+
+        if(m_pReply->error() != QNetworkReply::NoError)
+        {
+            QMessageBox::critical(0,"Error",QString("Error while downloading ") + QString(url) + QString(" : ") + m_pReply->errorString());
+            return m_pReply->error();
+        }
+
+        //qDebug() << "Saving" << QString(file);
+
+        QString file_s = QString(file);
+
+        QFile file(file_s);
+
+        file.open(QIODevice::WriteOnly);
+        file.write(m_pReply->readAll());
+        file.close();
+
+        return 0;
+    }
+}
+
+QUrl findRedirection(QUrl url)
+{
+    QNAMRedirect redirect;
+    redirect.processUrl(url.toString());
+
+    QEventLoop loop;
+    QObject::connect(&redirect, SIGNAL(finished()),&loop, SLOT(quit()));
+    loop.exec();
+
+    return redirect.getLastRedirect();
+}
+
+bool fexists(const char *filename)
+{
+  std::ifstream ifile(filename);
+  return ifile;
+}

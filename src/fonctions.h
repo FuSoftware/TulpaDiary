@@ -9,6 +9,18 @@
 
 #include "constantes.h"
 
+#include <QUrl>
+#include <QMessageBox>
+#include <QObject>
+#include <QByteArray>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QFile>
+#include <QEventLoop>
+
+#include "Workers/qnamredirect.h"
+
 void checkFolder(std::string path);
 
 std::string intToString(int i);
@@ -23,5 +35,9 @@ bool checkFile(std::string path);
 
 std::string getFolder(std::string file_path);
 
+int downloadFile(const char* url, const char* file, bool override);
+QUrl findRedirection(QUrl url);
+
+bool fexists(const char *filename);
 
 #endif // FONCTIONS_H
