@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network
 QMAKE_CXXFLAGS += -std=c++11
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -29,7 +29,10 @@ SOURCES += main.cpp\
     Widgets/tulpawidget.cpp \
     Widgets/addtulpawidget.cpp \
     Widgets/schedulewidget.cpp \
-    Widgets/qtulpastatistics.cpp
+    Widgets/qtulpastatistics.cpp \
+    Widgets/qguidelist.cpp \
+    Widgets/qguidelisteditor.cpp \
+    Workers/qnamredirect.cpp
 
 HEADERS  += widget.h \
     json/assertions.h \
@@ -54,7 +57,10 @@ HEADERS  += widget.h \
     Widgets/addtulpawidget.h \
     Widgets/schedulewidget.h \
     Widgets/qtulpastatistics.h \
-    ressources.h
+    ressources.h \
+    Widgets/qguidelist.h \
+    Widgets/qguidelisteditor.h \
+    Workers/qnamredirect.h
 
 DISTFILES += \
     json/sconscript
