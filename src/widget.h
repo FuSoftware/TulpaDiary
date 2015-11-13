@@ -6,10 +6,12 @@
 
 #include "Widgets/addentrywidget.h"
 #include "Widgets/tulpawidget.h"
+#include "Widgets/qguidelist.h"
 
 enum Indexes{
     ID_SESSIONS = 0,
-    ID_TULPAS
+    ID_TULPAS,
+    ID_GUIDES
 };
 
 class Widget : public QWidget
@@ -31,7 +33,8 @@ private:
     QTabWidget *tabWidget;
 
     AddEntryWidget *addEntryWidget;
-    AddTulpaWidget *addTulpaWidget;
+    QGuideList *guideList;
+
     TulpaWidget *tulpaWidget;
 
 };

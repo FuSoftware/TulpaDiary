@@ -14,8 +14,11 @@ Widget::Widget(QWidget *parent) : QWidget(parent)
 
     tulpaWidget = new TulpaWidget(this);
 
+    guideList = new QGuideList(this);
+
     tabWidget->addTab(addEntryWidget,"Add Session");
     tabWidget->addTab(tulpaWidget,"Tulpas");
+    tabWidget->addTab(guideList,"Guides");
 
     mainLayout->addWidget(tabWidget);
     setLayout(mainLayout);
