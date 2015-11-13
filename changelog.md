@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.1 - 2015/11/13
+- Added a guidelist
+- Added network functionalities into the program
+
 ## 0.2.0 - 2015/11/13
 - Started building an in-app calendar
 - Added some general session-statistics in the Tulpa tab
