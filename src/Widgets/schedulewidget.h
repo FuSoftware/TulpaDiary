@@ -1,6 +1,9 @@
 #ifndef SCHEDULEWIDGET_H
 #define SCHEDULEWIDGET_H
 
+#include "constantes.h"
+#include "qdatesessionsmanager.h"
+
 #include <QtWidgets>
 #include <QCalendarWidget>
 
@@ -13,9 +16,10 @@ public:
 signals:
 
 public slots:
+    void on_date_clicked(QDate date);
 
 private:
-    QCalendarWidget * calendar;
+    QCalendarWidget *calendar;
 };
 
 #endif // SCHEDULEWIDGET_H
