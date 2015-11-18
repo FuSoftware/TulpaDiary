@@ -36,5 +36,17 @@ const QString actions_string[ACTION_END_LIST] = {"Active Forcing (Talking)","Act
 
 const QString guide_types[G_END_LIST] = {"GENERAL","PERSONALITY","SENTIENCE","VISUALIZATION","CONCENTRATION","VOCALIZATION","FORCING","MOTIVATION","IMPOSITION","POSSESSION","OTHER"};
 
+/*Tutorial labels*/
+enum Tutorials{
+    TUTO_CALENDAR = 0,
+    TUTO_SESSIONMANAGER,
+    TUTO_EDITSESSION,
+    TUTO_END_LIST
+};
+
+const QString tutorials[TUTO_END_LIST]= {"To edit a date's sessions, open the date by double-clicking it",
+                                         "Here are listed all the sessions affected to the current date.\nPlease note that for now, you'll have to re-open the date to refresh the sessions list.\nThey are not automatically refreshed",
+                                         ""};
+
 #endif // RESSOURCES
 

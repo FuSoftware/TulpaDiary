@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.0 - 2015/11/18
+- Calendar is fully functionnal and is the main tab
+- Sessions are now listed by day, you can add/edit them, but not delete them for now
+- The software will check for lost Sessions (unsorted ones) and will, at each start, generate a session list for each tulpa.
+
 ## 0.2.0 - 2015/11/13
 - Started building an in-app calendar
 - Added some general session-statistics in the Tulpa tab

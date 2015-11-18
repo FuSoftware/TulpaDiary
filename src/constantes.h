@@ -4,7 +4,9 @@
 #define DEBUG 0
 
 #define APP_NAME "TulpaDiary"
-#define VERSION "0.2.1.0"
+#define VERSION "0.3.0.0"
+
+#define DATE_TYPE "yyyyMMdd"
 
 /*Folders*/
 #if DEBUG
@@ -21,6 +23,7 @@
     #define SESSION_FOLDER "data/sessions/"
     #define TULPA_FOLDER "data/tulpas/"
     #define DATA_FOLDER "data/"
+    #define LOG_FILE "logfile.log"
 #endif
 
 #define URL_GUIDELIST "https://raw.githubusercontent.com/FlorentUguet/TulpaDiary/master/guidelist.json"

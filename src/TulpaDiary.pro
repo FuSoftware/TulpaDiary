@@ -14,7 +14,6 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        widget.cpp \
     json/json_internalarray.inl \
     json/json_internalmap.inl \
     json/json_reader.cpp \
@@ -23,7 +22,6 @@ SOURCES += main.cpp\
     json/json_writer.cpp \
     fonctions_json.cpp \
     fonctions.cpp \
-    Widgets/addentrywidget.cpp \
     Objects/tulpa.cpp \
     Objects/session.cpp \
     Widgets/tulpawidget.cpp \
@@ -32,9 +30,15 @@ SOURCES += main.cpp\
     Widgets/qtulpastatistics.cpp \
     Widgets/qguidelist.cpp \
     Widgets/qguidelisteditor.cpp \
-    Workers/qnamredirect.cpp
+    Workers/qnamredirect.cpp \
+    Widgets/qdatesessionsmanager.cpp \
+    Widgets/qeditsession.cpp \
+    Workers/qsessionfixer.cpp \
+    Widgets/qcalendarbox.cpp \
+    mainwidget.cpp \
+    Objects/sessionindex.cpp
 
-HEADERS  += widget.h \
+HEADERS  += \
     json/assertions.h \
     json/autolink.h \
     json/config.h \
@@ -49,7 +53,6 @@ HEADERS  += widget.h \
     json/writer.h \
     fonctions_json.h \
     fonctions.h \
-    Widgets/addentrywidget.h \
     Objects/tulpa.h \
     constantes.h \
     Objects/session.h \
@@ -60,7 +63,13 @@ HEADERS  += widget.h \
     ressources.h \
     Widgets/qguidelist.h \
     Widgets/qguidelisteditor.h \
-    Workers/qnamredirect.h
+    Workers/qnamredirect.h \
+    Widgets/qdatesessionsmanager.h \
+    Widgets/qeditsession.h \
+    Workers/qsessionfixer.h \
+    Widgets/qcalendarbox.h \
+    mainwidget.h \
+    Objects/sessionindex.h
 
 DISTFILES += \
     json/sconscript
