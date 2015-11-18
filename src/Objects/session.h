@@ -9,23 +9,46 @@
 #include "fonctions_json.h"
 #include "fonctions.h"
 
+#include "../ressources.h"
+
+#include <QFile>
+#include <QDir>
+
 class Session
 {
 public:
     Session();
+    Session(std::string file);
     Session(int id);
-    Session(int id, std::string tulpa_name, std::string session_type, int session_type_id, std::string description, int duration, std::string time);
+    Session(int id, std::string tulpa_name, int session_type_id, std::string description, int duration, std::string date);
     ~Session();
 
+    void setFilePath(std::string path);
     void loadFromJSON();
+    void save();
 
+    std::string toString();
+
+    /*Getters*/
+    bool hasTulpa();
+    std::string getFilePath();
+    int getFullId();
     int getId();
     std::string getTulpaName();
     int getTypeId();
     std::string getType();
     std::string getDescription();
-    std::string getTime();
+    std::string getDate();
     int getDuration();
+    std::string getDurationString();
+
+    /*Setters*/
+    void setDescription(std::string desc);
+    void setDuration(int t);
+    void setID(int id);
+    void setTypeID(int id);
+    void setTulpaName(std::string name);
+    void setDate(std::string date);
 
 private:
     int id;
@@ -33,7 +56,7 @@ private:
     std::string tulpa_name;
     std::string session_type;
     std::string description;
-    std::string time;
+    std::string date;
     int duration;
 
     std::string local_file;

@@ -12,17 +12,20 @@
 
 #include "session.h"
 
+#include "sessionindex.h"
+
 class Tulpa
 {
 public:
     Tulpa();
-    Tulpa(std::string name);
+    Tulpa(std::string name, bool load_sessions = true);
     ~Tulpa();
 
-    void loadByName(std::string name);
+    void loadByName(std::string name, bool load_sessions = true);
     void save();
     void generateFilePath();
     void addPersonalityTrait(std::string trait);
+    void clearSessions();
     void addSessions(Session session);
 
     void loadSession(int id);

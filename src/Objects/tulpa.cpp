@@ -5,9 +5,9 @@ Tulpa::Tulpa()
 
 }
 
-Tulpa::Tulpa(std::string name)
+Tulpa::Tulpa(std::string name, bool load_sessions)
 {
-    loadByName(name);
+    loadByName(name, load_sessions);
 }
 
 Tulpa::~Tulpa()
@@ -15,7 +15,7 @@ Tulpa::~Tulpa()
 
 }
 
-void Tulpa::loadByName(std::string name)
+void Tulpa::loadByName(std::string name, bool load_sessions)
 {
     this->name = name;
     local_file = std::string(TULPA_FOLDER) + this->name + std::string(".json");
@@ -45,11 +45,14 @@ void Tulpa::loadByName(std::string name)
         i++;
     }
 
-    i=0;
-    while(root["session_id"][i] != Json::nullValue)
+    if(load_sessions)
     {
-        loadSession(root["session_id"][i].asInt());
-        i++;
+        i=0;
+        while(root["session_id"][i] != Json::nullValue)
+        {
+            loadSession(root["session_id"][i].asInt());
+            i++;
+        }
     }
 
     birth_time = root["birth_time"].asString();
@@ -87,17 +90,24 @@ void Tulpa::addPersonalityTrait(std::string trait)
     personality_traits.push_back(trait);
 }
 
+void Tulpa::clearSessions()
+{
+    sessions.clear();
+}
+
 void Tulpa::addSessions(Session session)
 {
     sessions.push_back(session);
-    sessions_id.push_back(session.getId());
+    sessions_id.push_back(session.getFullId());
 }
 
 void Tulpa::loadSession(int id)
-{
-    Session session(id);
-    sessions.push_back(session);
-    sessions_id.push_back(session.getId());
+{   
+    SessionIndex index(id);
+    //qDebug() << "Loading session" << id << "for" << name.c_str() << ":" << index.getFileName().c_str();
+
+    Session session(index.getFileName());
+    addSessions(session);
 }
 
 void Tulpa::setName(std::string name)

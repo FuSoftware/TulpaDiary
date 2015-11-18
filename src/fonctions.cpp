@@ -178,3 +178,10 @@ bool fexists(const char *filename)
   std::ifstream ifile(filename);
   return ifile;
 }
+
+bool sessionExists(QDate date, int id)
+{
+    QString file = QString(SESSION_FOLDER) + date.toString(DATE_TYPE) + QString("/") + QString::number(id) + QString(".json");
+
+    return fexists(file.toStdString().c_str());
+}

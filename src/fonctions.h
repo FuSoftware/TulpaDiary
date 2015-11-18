@@ -19,6 +19,8 @@
 #include <QFile>
 #include <QEventLoop>
 
+#include <QDate>
+
 #include "Workers/qnamredirect.h"
 
 void checkFolder(std::string path);
@@ -39,5 +41,6 @@ int downloadFile(const char* url, const char* file, bool override);
 QUrl findRedirection(QUrl url);
 
 bool fexists(const char *filename);
+bool sessionExists(QDate date, int id);
 
 #endif // FONCTIONS_H

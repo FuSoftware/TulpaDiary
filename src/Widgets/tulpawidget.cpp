@@ -141,7 +141,9 @@ void TulpaWidget::loadSessions()
 
     for(int i=0;i<tulpa->getSessionsIds().size();i++)
     {
-        sessionsList.push_back(QString("  ") +QString::number(tulpa->getSessionsIds().at(i)) + QString(" - ") + QString(Session(tulpa->getSessionsIds().at(i)).getTime().c_str()) + QString(" - ") + QString(Session(tulpa->getSessionsIds().at(i)).getType().c_str()));
+        SessionIndex index(tulpa->getSessionsIds().at(i));
+        Session buffer(index.getFileName());
+        sessionsList.push_back(QString("  ") +QString::number(tulpa->getSessionsIds().at(i)) + QString(" - ") + QString(buffer.getType().c_str()));
     }
     sessionsModel->setStringList(sessionsList);
 

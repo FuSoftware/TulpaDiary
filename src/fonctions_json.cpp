@@ -17,8 +17,8 @@ Json::Value loadJSONFile(const char* filePath)
     if ( !parsingSuccessful )
     {
         // report to the user the failure and their locations in the document.
-        outputInfo(L_ERROR,
-                   reader.getFormattedErrorMessages());
+        outputInfo(L_ERROR,std::string("Error on ") + std::string(filePath));
+        outputInfo(L_ERROR,reader.getFormattedErrorMessages());
         return Json::nullValue;
     }
 
