@@ -17,6 +17,7 @@ QEditSession::QEditSession(Session *session, bool load, QWidget *parent) : QWidg
 
     lineEditTimeSpent = new QLineEdit(this);
     textEditDescription = new QTextEdit(this);
+    textEditWriting = new QTextEdit(this);
     pushButtonSave = new QPushButton("Save",this);
     pushButtonDate = new QPushButton("Edit date",this);
 
@@ -51,6 +52,9 @@ QEditSession::QEditSession(Session *session, bool load, QWidget *parent) : QWidg
             break;
         case 5:
             layout[i]->addWidget(textEditDescription);
+            break;
+        case 6:
+            layout[i]->addWidget(textEditWriting);
             break;
         }
 
@@ -112,6 +116,9 @@ void QEditSession::save()
     session->setDescription(textEditDescription->toPlainText().toStdString());
 
     session->save();
+    emit saved();
+    emit finished();
+    this->close();
 }
 
 void QEditSession::changeDate()

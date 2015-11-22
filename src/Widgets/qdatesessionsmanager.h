@@ -9,7 +9,7 @@
 
 enum Mappers{
     EDIT = 0,
-    VIEW
+    DEL
 };
 
 class QDateSessionsManager : public QWidget
@@ -17,13 +17,17 @@ class QDateSessionsManager : public QWidget
     Q_OBJECT
 public:
     QDateSessionsManager(QDate date, QWidget *parent = 0);
-    void loadSessions();
+    void loadSessionFiles();
     QWidget *loadSession(Session *session, int i);
+
+    void clearSessionsUI();
 
 signals:
 
 public slots:
+    void loadUI();
     void editSession(int i);
+    void deleteSession(int i);
     void addSession();
 
 private:
@@ -35,8 +39,11 @@ private:
     QList<QSignalMapper*> mappers;
 
     QPushButton *pBA;
+    QLabel *label;
 
     std::vector<Session*> sessions;
+
+    QList<QWidget*> childWidgets;
 };
 
 #endif // QDATESESSIONSMANAGER_H

@@ -23,6 +23,8 @@ public:
     void loadTulpas();
 
 signals:
+    void saved();
+    void finished();
 
 public slots:
     void save();
@@ -42,6 +44,8 @@ private:
     QLineEdit *lineEditTimeSpent;
 
     QTextEdit *textEditDescription;
+
+    QTextEdit *textEditWriting;
 
     QPushButton *pushButtonSave;
 

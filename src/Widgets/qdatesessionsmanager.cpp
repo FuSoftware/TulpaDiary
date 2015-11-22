@@ -10,25 +10,36 @@ QDateSessionsManager::QDateSessionsManager(QDate date, QWidget *parent) : QWidge
     dir = new QDir(folder);
     dir->setFilter(QDir::Files|QDir::NoDotAndDotDot);
 
-    loadSessions();
-
     mappers.push_back(new QSignalMapper(this));
     connect(mappers.at(EDIT), SIGNAL(mapped(int)), this, SLOT(editSession(int)));
 
-    //mappers.push_back(new QSignalMapper(this));
-    //connect(mappers.at(VIEW), SIGNAL(mapped(int)), this, SLOT(viewSession(int)));
-
-    QVBoxLayout *mainLayout = new QVBoxLayout;
-    QLabel *label = new QLabel(tutorials[TUTO_SESSIONMANAGER],this);
-    mainLayout->addWidget(label);
+    mappers.push_back(new QSignalMapper(this));
+    connect(mappers.at(DEL), SIGNAL(mapped(int)), this, SLOT(deleteSession(int)));
 
     pBA = new QPushButton("Add Session",this);
+    label = new QLabel(tutorials[TUTO_SESSIONMANAGER],this);
+
+    connect(pBA,SIGNAL(clicked()),this,SLOT(addSession()));
+
+    loadUI();
+}
+
+void QDateSessionsManager::loadUI()
+{
+    clearSessionsUI();
+
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    mainLayout->addWidget(label);
+
+    loadSessionFiles();
+
     n_files = dir->entryList().size();
 
     for(int i=0;i<n_files;i++)
     {
         QWidget *widget = loadSession(sessions.at(i),i);
         mainLayout->addWidget(widget);
+        childWidgets.push_back(widget);
     }
 
     QHBoxLayout *layoutAdd = new QHBoxLayout;
@@ -38,11 +49,9 @@ QDateSessionsManager::QDateSessionsManager(QDate date, QWidget *parent) : QWidge
     mainLayout->addLayout(layoutAdd);
 
     setLayout(mainLayout);
-
-    connect(pBA,SIGNAL(clicked()),this,SLOT(addSession()));
 }
 
-void QDateSessionsManager::loadSessions()
+void QDateSessionsManager::loadSessionFiles()
 {
     delete dir;
     dir = new QDir(folder);
@@ -71,17 +80,15 @@ QWidget *QDateSessionsManager::loadSession(Session *session, int i)
 
     layout->addWidget(label,15);
 
-    /*
-    QPushButton *pBV = new QPushButton("View",this);
-    layout->addWidget(pBV);
-    mappers.at(VIEW)->setMapping(pBV,i);
-    connect(pBV, SIGNAL(clicked()), mappers.at(VIEW), SLOT(map()));
-    */
-
     QPushButton *pBE = new QPushButton("Edit",this);
     layout->addWidget(pBE);
     mappers.at(EDIT)->setMapping(pBE,i);
     connect(pBE, SIGNAL(clicked()), mappers.at(EDIT), SLOT(map()));
+
+    QPushButton *pBD = new QPushButton("Delete",this);
+    layout->addWidget(pBD);
+    mappers.at(DEL)->setMapping(pBD,i);
+    connect(pBD, SIGNAL(clicked()), mappers.at(DEL), SLOT(map()));
 
     widget->setLayout(layout);
 
@@ -92,6 +99,21 @@ void QDateSessionsManager::editSession(int i)
 {
     QEditSession *w = new QEditSession(sessions.at(i),true,0);
     w->show();
+    connect(w,SIGNAL(finished()),this,SLOT(loadUI()));
+}
+
+void QDateSessionsManager::deleteSession(int i)
+{
+    QString text = QString("Are you sure you want to delete the session :\n") + QString(this->sessions.at(i)->toString().c_str());
+    int reponse = QMessageBox::question(this,"Delete file",text);
+
+    if(reponse == QMessageBox::Yes)
+    {
+        QFile file(dir->entryInfoList().at(i).absoluteFilePath());
+        file.remove();
+        loadUI();
+        this->resize(0,0);
+    }
 }
 
 void QDateSessionsManager::addSession()
@@ -112,4 +134,17 @@ void QDateSessionsManager::addSession()
     session->setDate(date.toString(DATE_TYPE).toStdString());
     QEditSession *w = new QEditSession(session,true,0);
     w->show();
+    connect(w,SIGNAL(finished()),this,SLOT(loadUI()));
+}
+
+void QDateSessionsManager::clearSessionsUI()
+{
+    QWidget* item;
+    while ( !childWidgets.isEmpty() && ( (item = childWidgets.takeFirst()) != 0 ) )
+    {
+        this->layout()->removeWidget(item);
+        delete item; // It works no matter where the item is
+    }
+    delete this->layout();
+    childWidgets.clear();
 }
