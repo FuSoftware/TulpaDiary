@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.1 - 2015/11/22
+- Sessions can de deleted
+- The QSessionsManager now properly handles sessions modifications and reloads correctly
+
 ## 0.3.0 - 2015/11/18
 - Calendar is fully functionnal and is the main tab
 - Sessions are now listed by day, you can add/edit them, but not delete them for now
