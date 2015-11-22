@@ -4,7 +4,7 @@
 #define DEBUG 0
 
 #define APP_NAME "TulpaDiary"
-#define VERSION "0.3.0.0"
+#define VERSION "0.3.1.0"
 
 #define DATE_TYPE "yyyyMMdd"
 
@@ -14,10 +14,12 @@
         #define TULPA_FOLDER "F:/My Programs/C++/TulpaDiary/data/tulpas/"
         #define SESSION_FOLDER "F:/My Programs/C++/TulpaDiary/data/sessions/"
         #define DATA_FOLDER "F:/My Programs/C++/TulpaDiary/data/"
+        #define LOG_FILE "F:/My Programs/C++/TulpaDiary/logfile.log"
     #elif __linux
         #define TULPA_FOLDER "/usr/share/TulpaDiary/data/tulpas/"
         #define SESSION_FOLDER "/usr/share/TulpaDiary/data/sessions/"
         #define DATA_FOLDER "/usr/share/TulpaDiary/data/"
+        #define LOG_FILE "/usr/share/TulpaDiary/logfile.log"
     #endif
 #else
     #define SESSION_FOLDER "data/sessions/"
