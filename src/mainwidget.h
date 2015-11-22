@@ -5,6 +5,7 @@
 
 #include "Widgets/tulpawidget.h"
 #include "Widgets/schedulewidget.h"
+#include "Widgets/qguidelist.h"
 
 class MainWidget : public QWidget
 {
@@ -21,6 +22,7 @@ private:
     ScheduleWidget *w;
     TulpaWidget *t;
     QTabWidget *tab;
+    QGuideList *guideList;
 
 
 };

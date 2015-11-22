@@ -12,9 +12,11 @@ void MainWidget::loadUI()
     w = new ScheduleWidget(this);
     t = new TulpaWidget(this);
     tab = new QTabWidget(this);
+    guideList = new QGuideList(this);
 
     tab->addTab(w,"Schedule");
     tab->addTab(t,"Tulpas");
+    tab->addTab(guideList,"Guides");
 
     QVBoxLayout *layout = new QVBoxLayout;
 
@@ -25,5 +27,6 @@ void MainWidget::loadUI()
     outputInfo(L_DEBUG,"Main UI loaded");
 
     this->show();
+    this->resize(0,0);
 }
 
