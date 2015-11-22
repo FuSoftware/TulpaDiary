@@ -2,6 +2,8 @@
 
 QGuideList::QGuideList(QWidget *parent) : QWidget(parent)
 {
+    this->parent = parent;
+
     file_path = std::string(DATA_FOLDER) + std::string("guidelist.json");
 
     int res = downloadFile(URL_GUIDELIST,file_path.c_str(),true);
@@ -69,5 +71,7 @@ void QGuideList::generateGuideList(int index)
 
     widget->setLayout(groupBoxLayout);
     mainlayout->addWidget(widget);
+    parent->resize(0,0);
+
 }
 

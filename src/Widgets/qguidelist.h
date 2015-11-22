@@ -21,6 +21,7 @@ public slots:
     void generateGuideList(int index);
 
 private:
+    QWidget *parent;
     QWidget *widget;
     QVBoxLayout *mainlayout;
     QComboBox *guideType;
