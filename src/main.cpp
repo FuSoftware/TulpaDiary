@@ -39,11 +39,11 @@ int main(int argc, char *argv[])
 
     if(DEBUG)
     {
-        w->setWindowTitle(QString(APP_NAME) + QString(" ") + QString(VERSION));
+        w->setWindowTitle(QString(APP_NAME) + QString(" Debug ") + QString(VERSION));
     }
     else
     {
-        w->setWindowTitle(QString(APP_NAME) + QString(" Debug ") + QString(VERSION));
+        w->setWindowTitle(QString(APP_NAME) + QString(" ") + QString(VERSION));
     }
 
     w->loadUI();
