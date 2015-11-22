@@ -12,6 +12,7 @@ enum Actions
     ACTION_ACTIVE_B,
     ACTION_PASSIVE,
     ACTION_MEDITATION,
+    ACTION_SWITCHING,
     ACTION_END_LIST
 };
 
@@ -32,7 +33,7 @@ enum GuideType
 };
 
 const QString titles[OBJECT_NUMBER] = {"Session","Tulpa","Action type","Date","Time spent (Minutes)","Detailed description", "Session's writing"};
-const QString actions_string[ACTION_END_LIST] = {"Active Forcing (Talking)","Active Forcing (Visualisation)","Active Forcing (Both)","Passive Forcing","Meditation"};
+const QString actions_string[ACTION_END_LIST] = {"Active Forcing (Talking)","Active Forcing (Visualisation)","Active Forcing (Both)","Passive Forcing","Meditation","Switching"};
 
 const QString guide_types[G_END_LIST] = {"GENERAL","PERSONALITY","SENTIENCE","VISUALIZATION","CONCENTRATION","VOCALIZATION","FORCING","MOTIVATION","IMPOSITION","POSSESSION","OTHER"};
 
