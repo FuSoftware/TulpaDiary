@@ -41,6 +41,7 @@ public:
     std::string getDate();
     int getDuration();
     std::string getDurationString();
+    std::string getWritingLog();
 
     /*Setters*/
     void setDescription(std::string desc);
@@ -49,6 +50,7 @@ public:
     void setTypeID(int id);
     void setTulpaName(std::string name);
     void setDate(std::string date);
+    void setWritingLog(std::string log);
 
 private:
     int id;
@@ -57,6 +59,7 @@ private:
     std::string session_type;
     std::string description;
     std::string date;
+    std::string writing_log;
     int duration;
 
     std::string local_file;

@@ -81,6 +81,7 @@ void QEditSession::loadSession()
     comboBoxAction->setCurrentIndex(session->getTypeId());
     lineEditTimeSpent->setText(QString::number(session->getDuration()));
     textEditDescription->setText(session->getDescription().c_str());
+    textEditWriting->setText(session->getWritingLog().c_str());
 }
 
 void QEditSession::loadTulpas()
@@ -114,6 +115,7 @@ void QEditSession::save()
     session->setTulpaName(comboBoxName->currentText().toStdString());
     session->setDuration(lineEditTimeSpent->text().toInt());
     session->setDescription(textEditDescription->toPlainText().toStdString());
+    session->setWritingLog(textEditWriting->toPlainText().toStdString());
 
     session->save();
     emit saved();

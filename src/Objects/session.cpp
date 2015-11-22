@@ -68,6 +68,7 @@ void Session::loadFromJSON()
     setDescription(root["description"].asString());
     setDuration(root["duration"].asInt());
     setDate(root["date"].asString());
+    setWritingLog(root["writing_log"].asString());
 }
 
 void Session::save()
@@ -85,6 +86,7 @@ void Session::save()
     root["description"] = getDescription();
     root["duration"] = getDuration();
     root["date"] = date;
+    root["writing_log"] = writing_log;
 
     saveJSONFile(root,local_file.c_str());
 }
@@ -186,6 +188,11 @@ std::string Session::getDurationString()
     return str;
 }
 
+std::string Session::getWritingLog()
+{
+    return this->writing_log;
+}
+
 
 void Session::setDescription(std::string desc)
 {
@@ -216,4 +223,9 @@ void Session::setTulpaName(std::string name)
 void Session::setDate(std::string date)
 {
     this->date = date;
+}
+
+void Session::setWritingLog(std::string log)
+{
+    this->writing_log = log;
 }
