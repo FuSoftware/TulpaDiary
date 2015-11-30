@@ -5,8 +5,12 @@ QGuideList::QGuideList(QWidget *parent) : QWidget(parent)
     this->parent = parent;
 
     file_path = std::string(DATA_FOLDER) + std::string("guidelist.json");
+    int res = 0;
 
-    int res = downloadFile(URL_GUIDELIST,file_path.c_str(),true);
+    if(!fexists(file_path.c_str()))
+    {
+         res = downloadFile(URL_GUIDELIST,file_path.c_str(),true);
+    }
 
     if(res == 0)
     {
@@ -27,7 +31,7 @@ void QGuideList::loadUI()
     QString title;
 
     /*Load category*/
-    for(int i=0;i<G_END_LIST;i++)
+    for(unsigned int i=0;i<G_END_LIST;i++)
     {
         /*Guide category*/
         title = guide_types[i].toLower();

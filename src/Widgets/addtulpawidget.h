@@ -50,6 +50,8 @@ private:
 
     QStringList personalityTraits;
 
+    QDateEdit *dateEdit;
+
     QString path;
 
     QList<QLineEdit*> lineEdits;

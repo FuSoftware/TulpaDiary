@@ -32,20 +32,20 @@ void QTulpaStatistics::loadTulpa(Tulpa* tulpa)
     int d,h,m;
 
     /*Clear counts*/
-    for(int i=0;i<ACTION_END_LIST;i++)
+    for(unsigned int i=0;i<ACTION_END_LIST;i++)
     {
         sessions[i] = 0;
     }
 
     /*Load durations*/
-    for(int i=0;i<tulpa->getSessions().size();i++)
+    for(unsigned int i=0;i<tulpa->getSessions().size();i++)
     {
         time[tulpa->getSessions().at(i).getTypeId()] += tulpa->getSessions().at(i).getDuration();
         sessions[i]++ ;
     }
 
     /*Generate Strings*/
-    for(int i=0;i<ACTION_END_LIST;i++)
+    for(unsigned int i=0;i<ACTION_END_LIST;i++)
     {
         strings[i].clear();
         /*Days*/
@@ -87,7 +87,7 @@ void QTulpaStatistics::setupModel()
 
     model->setHorizontalHeaderLabels(labels);
 
-    for(int i=0;i<ACTION_END_LIST;i++)
+    for(unsigned int i=0;i<ACTION_END_LIST;i++)
     {
          model->setItem(i,0,new QStandardItem(actions_string[i])); //Type
          model->setItem(i,1,new QStandardItem(strings[i])); //Duration

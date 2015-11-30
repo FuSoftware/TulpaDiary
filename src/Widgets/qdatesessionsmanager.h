@@ -18,7 +18,7 @@ class QDateSessionsManager : public QWidget
 public:
     QDateSessionsManager(QDate date, QWidget *parent = 0);
     void loadSessionFiles();
-    QWidget *loadSession(Session *session, int i);
+    QWidget *loadSession(Session *session, unsigned int i);
 
     void clearSessionsUI();
 
@@ -26,8 +26,8 @@ signals:
 
 public slots:
     void loadUI();
-    void editSession(int i);
-    void deleteSession(int i);
+    void editSession(unsigned int i);
+    void deleteSession(unsigned int i);
     void addSession();
 
 private:

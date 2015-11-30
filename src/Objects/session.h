@@ -19,8 +19,8 @@ class Session
 public:
     Session();
     Session(std::string file);
-    Session(int id);
-    Session(int id, std::string tulpa_name, int session_type_id, std::string description, int duration, std::string date);
+    Session(unsigned int id);
+    Session(unsigned int id, std::string tulpa_name, int session_type_id, std::string description, int duration, std::string date);
     ~Session();
 
     void setFilePath(std::string path);
@@ -46,14 +46,14 @@ public:
     /*Setters*/
     void setDescription(std::string desc);
     void setDuration(int t);
-    void setID(int id);
-    void setTypeID(int id);
+    void setID(unsigned int id);
+    void setTypeID(unsigned int id);
     void setTulpaName(std::string name);
     void setDate(std::string date);
     void setWritingLog(std::string log);
 
 private:
-    int id;
+    unsigned int id;
     int session_type_id;
     std::string tulpa_name;
     std::string session_type;

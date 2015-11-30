@@ -87,6 +87,7 @@ void TulpaWidget::addTulpa()
     AddTulpaWidget *w = new AddTulpaWidget(0);
     w->show();
     connect(w,SIGNAL(finished()),this,SIGNAL(tulpa_list_changed()));
+    connect(w,SIGNAL(finished()),this,SLOT(reload()));
 }
 
 void TulpaWidget::editTulpa()
@@ -94,6 +95,7 @@ void TulpaWidget::editTulpa()
     AddTulpaWidget *w = new AddTulpaWidget(comboBoxTulpa->currentText(),0);
     w->show();
     connect(w,SIGNAL(finished()),this,SIGNAL(tulpa_list_changed()));
+    connect(w,SIGNAL(finished()),this,SLOT(reload()));
 }
 
 void TulpaWidget::reload()
@@ -126,7 +128,7 @@ void TulpaWidget::loadPersonality()
     personalityList.clear();
     personalityList.push_back(QString("Personality :"));
 
-    for(int i=0;i<tulpa->getPersonalityTraits().size();i++)
+    for(unsigned int i=0;i<tulpa->getPersonalityTraits().size();i++)
     {
         personalityList.push_back(QString("  -") + QString(tulpa->getPersonalityTrait(i).c_str()));
     }
@@ -139,7 +141,7 @@ void TulpaWidget::loadSessions()
     sessionsList.clear();
     sessionsList.push_back(QString("Sessions :"));
 
-    for(int i=0;i<tulpa->getSessionsIds().size();i++)
+    for(unsigned int i=0;i<tulpa->getSessionsIds().size();i++)
     {
         SessionIndex index(tulpa->getSessionsIds().at(i));
         Session buffer(index.getFileName());

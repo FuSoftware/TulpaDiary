@@ -21,10 +21,10 @@ void AddTulpaWidget::loadTulpa(QString name)
     tulpa.loadByName(name.toStdString());
 
     this->lineEdits.at(LINE_EDIT_NAME)->setText(QString(tulpa.getName().c_str()));
-    this->lineEdits.at(LINE_EDIT_BIRTH)->setText(QString(tulpa.getBirthTime().c_str()));
+    this->dateEdit->setDate(dateFromString(tulpa.getBirthTime()));
     this->lineEdits.at(LINE_EDIT_FIRST_WORD)->setText(QString(tulpa.getFirstWordTime().c_str()));
 
-    for(int i=0;i<tulpa.getPersonalityTraits().size();i++)
+    for(unsigned int i=0;i<tulpa.getPersonalityTraits().size();i++)
     {
         personalityTraits << QString(tulpa.getPersonalityTrait(i).c_str());
     }
@@ -35,9 +35,9 @@ void AddTulpaWidget::loadTulpa(QString name)
 void AddTulpaWidget::loadUI()
 {
     mainLayout = new QVBoxLayout;
-
+    dateEdit = new QDateEdit(this);
     /*Main data*/
-    for(int i=0;i<LAYOUT_END_LIST;i++)
+    for(unsigned int i=0;i<LAYOUT_END_LIST;i++)
     {
         labels.push_back(new QLabel(label_names[i],this));
         lineEdits.push_back(new QLineEdit(this));
@@ -48,6 +48,11 @@ void AddTulpaWidget::loadUI()
 
         mainLayout->addLayout(layouts.at(i));
     }
+
+    /*Removes the date LineEdit and adds a QDateEdit*/
+    layouts.at(LAYOUT_BIRTH)->removeWidget(lineEdits.at(LAYOUT_BIRTH));
+    layouts.at(LAYOUT_BIRTH)->addWidget(dateEdit);
+    lineEdits.at(LAYOUT_BIRTH)->hide();
 
     /*Personality*/
     QHBoxLayout *layoutBottom = new QHBoxLayout;
@@ -84,10 +89,6 @@ void AddTulpaWidget::save()
     {
         QMessageBox::critical(this,"Error","Please specify a name");
     }
-    else if(lineEdits.at(LINE_EDIT_BIRTH)->text().isEmpty())
-    {
-        QMessageBox::critical(this,"Error","Please specify a birth date");
-    }
     else
     {
         if(lineEdits.at(LINE_EDIT_FIRST_WORD)->text().isEmpty())
@@ -102,7 +103,7 @@ void AddTulpaWidget::save()
 
         /*Saving*/
         tulpa.setName(lineEdits.at(LINE_EDIT_NAME)->text().toStdString());
-        tulpa.setBirthTime(lineEdits.at(LINE_EDIT_BIRTH)->text().toStdString());
+        tulpa.setBirthTime(dateEdit->date().toString(DATE_TYPE).toStdString());
         tulpa.setFirstWordTime(lineEdits.at(LINE_EDIT_FIRST_WORD)->text().toStdString());
 
         std::vector<std::string> personality;

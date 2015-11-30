@@ -11,20 +11,20 @@ class SessionIndex
 {
 public:
     SessionIndex(std::string str);
-    SessionIndex(int id);
-    SessionIndex(QDate date, int id);
+    SessionIndex(unsigned int id);
+    SessionIndex(QDate date, unsigned int id);
 
     void loadFromString(std::string str);
 
     void setDate(QDate date);
-    void setID(int id);
+    void setID(unsigned int id);
     QDate getDate();
     int getID();
     std::string getFileName();
 
 private:
     QDate date;
-    int id;
+    unsigned int id;
 };
 
 #endif // SESSIONINDEX_H

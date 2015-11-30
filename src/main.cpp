@@ -12,7 +12,6 @@
 
 int main(int argc, char *argv[])
 {
-
     std::freopen(LOG_FILE, "a", stdout);
 
     std::clog << endl;
@@ -21,6 +20,12 @@ int main(int argc, char *argv[])
 
 
     QApplication a(argc, argv);
+
+    if(!createMainDirs())
+    {
+        QMessageBox::critical(0,"Error",QString("Couldn't create the app directories. Please check the permissions at :\n") + QString(DATA_FOLDER));
+        exit(15);
+    }
 
 
     QSessionFixer *f;

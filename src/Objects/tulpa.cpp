@@ -23,7 +23,7 @@ void Tulpa::loadByName(std::string name, bool load_sessions)
 
     this->name[0] = toupper(this->name[0]);
 
-    int i=0;
+    unsigned int i=0;
 
     if(!checkFile(local_file))
     {
@@ -63,12 +63,12 @@ void Tulpa::save()
 {
     Json::Value root;
 
-    for(int i=0;i<personality_traits.size();i++)
+    for(unsigned int i=0;i<personality_traits.size();i++)
     {
         root["personality_traits"][i] = personality_traits.at(i);
     }
 
-    for(int i=0;i<sessions_id.size();i++)
+    for(unsigned int i=0;i<sessions_id.size();i++)
     {
         root["session_id"][i] = sessions_id.at(i);
     }
@@ -101,7 +101,7 @@ void Tulpa::addSessions(Session session)
     sessions_id.push_back(session.getFullId());
 }
 
-void Tulpa::loadSession(int id)
+void Tulpa::loadSession(unsigned int id)
 {   
     SessionIndex index(id);
     //qDebug() << "Loading session" << id << "for" << name.c_str() << ":" << index.getFileName().c_str();
@@ -134,7 +134,7 @@ std::string Tulpa::getName()
     return this->name;
 }
 
-std::string Tulpa::getPersonalityTrait(int i)
+std::string Tulpa::getPersonalityTrait(unsigned int i)
 {
     return personality_traits[i];
 }
