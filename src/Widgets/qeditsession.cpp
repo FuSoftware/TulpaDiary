@@ -22,7 +22,7 @@ QEditSession::QEditSession(Session *session, bool load, QWidget *parent) : QWidg
     pushButtonDate = new QPushButton("Edit date",this);
 
 
-    for(int i=0;i<ACTION_END_LIST;i++)
+    for(unsigned int i=0;i<ACTION_END_LIST;i++)
     {
         comboBoxAction->addItem(actions_string[i]);
     }
@@ -30,7 +30,7 @@ QEditSession::QEditSession(Session *session, bool load, QWidget *parent) : QWidg
     QGroupBox   *groupBox[OBJECT_NUMBER];
     QVBoxLayout *layout[OBJECT_NUMBER];
 
-    for(int i=1; i<OBJECT_NUMBER;i++)
+    for(unsigned int i=1; i<OBJECT_NUMBER;i++)
     {
         groupBox[i] = new QGroupBox(titles[i],this);
         layout[i] = new QVBoxLayout;

@@ -13,6 +13,8 @@ ScheduleWidget::ScheduleWidget(QWidget *parent) : QWidget(parent)
     setLayout(layout);
 
     connect(calendar,SIGNAL(activated(QDate)),this,SLOT(on_date_clicked(QDate)));
+
+    resize(0,0);
 }
 
 

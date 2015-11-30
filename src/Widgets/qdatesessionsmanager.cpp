@@ -66,7 +66,7 @@ void QDateSessionsManager::loadSessionFiles()
 }
 
 
-QWidget *QDateSessionsManager::loadSession(Session *session, int i)
+QWidget *QDateSessionsManager::loadSession(Session *session, unsigned int i)
 {
     QWidget *widget = new QWidget(this);
 
@@ -95,14 +95,14 @@ QWidget *QDateSessionsManager::loadSession(Session *session, int i)
     return widget;
 }
 
-void QDateSessionsManager::editSession(int i)
+void QDateSessionsManager::editSession(unsigned int i)
 {
     QEditSession *w = new QEditSession(sessions.at(i),true,0);
     w->show();
     connect(w,SIGNAL(finished()),this,SLOT(loadUI()));
 }
 
-void QDateSessionsManager::deleteSession(int i)
+void QDateSessionsManager::deleteSession(unsigned int i)
 {
     QString text = QString("Are you sure you want to delete the session :\n") + QString(this->sessions.at(i)->toString().c_str());
     int reponse = QMessageBox::question(this,"Delete file",text);
@@ -121,7 +121,7 @@ void QDateSessionsManager::addSession()
     Session *session = new Session();
 
     /*Create ID*/
-    int id = n_files;
+    unsigned int id = n_files;
 
     while(sessionExists(date,id))
     {

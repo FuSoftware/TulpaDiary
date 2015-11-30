@@ -36,7 +36,7 @@ public:
     void clearLayout(QLayout *layout);
 signals:
     void tulpa_list_changed();
-    void show_session(int id);
+    void show_session(unsigned int id);
 
 public slots:
     void loadTulpa(QString name);

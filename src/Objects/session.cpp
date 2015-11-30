@@ -19,7 +19,7 @@ Session::Session(std::string file)
 }
 
 /*
-Session::Session(int id)
+Session::Session(unsigned int id)
 {
     local_file = std::string(SESSION_FOLDER) + intToString(id) + std::string(".json");
 
@@ -38,7 +38,7 @@ Session::Session(int id)
 }
 */
 
-Session::Session(int id, std::string tulpa_name, int session_type_id, std::string description, int duration, std::string date)
+Session::Session(unsigned int id, std::string tulpa_name, int session_type_id, std::string description, int duration, std::string date)
 {
     setID(id);
     setTypeID(session_type_id);
@@ -204,12 +204,12 @@ void Session::setDuration(int t)
     this->duration = t;
 }
 
-void Session::setID(int id)
+void Session::setID(unsigned int id)
 {
     this->id = id;
 }
 
-void Session::setTypeID(int id)
+void Session::setTypeID(unsigned int id)
 {
     this->session_type_id = id;
     this->session_type = actions_string[id].toStdString();

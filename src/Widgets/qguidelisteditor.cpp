@@ -5,7 +5,7 @@ QGuideListEditor::QGuideListEditor(QWidget *parent) : QWidget(parent)
     file_path = std::string(DATA_FOLDER) + std::string("guidelist.json");
 
     comboBoxType = new QComboBox(this);
-    for(int i=0;i<G_END_LIST;i++)
+    for(unsigned int i=0;i<G_END_LIST;i++)
     {
         comboBoxType->addItem(guide_types[i].toLower());
     }
@@ -35,7 +35,7 @@ QGuideListEditor::QGuideListEditor(QWidget *parent) : QWidget(parent)
 
 void QGuideListEditor::add()
 {
-    int index = root[comboBoxType->currentIndex()].size();
+    unsigned int index = root[comboBoxType->currentIndex()].size();
     root[comboBoxType->currentIndex()][index]["url"] = lineEditUrl->text().toStdString();
     root[comboBoxType->currentIndex()][index]["name"] = lineEditName->text().toStdString();
 

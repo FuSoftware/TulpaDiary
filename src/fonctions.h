@@ -22,10 +22,13 @@
 #include <QDate>
 
 #include "Workers/qnamredirect.h"
+QDate dateFromString(std::string str);
+
+bool createMainDirs();
 
 void checkFolder(std::string path);
 
-std::string intToString(int i);
+std::string intToString(unsigned int i);
 char* stringToCString(std::string input);
 
 const std::string currentDateTime();
@@ -41,6 +44,6 @@ int downloadFile(const char* url, const char* file, bool override);
 QUrl findRedirection(QUrl url);
 
 bool fexists(const char *filename);
-bool sessionExists(QDate date, int id);
+bool sessionExists(QDate date, unsigned int id);
 
 #endif // FONCTIONS_H

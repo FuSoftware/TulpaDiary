@@ -28,14 +28,14 @@ public:
     void clearSessions();
     void addSessions(Session session);
 
-    void loadSession(int id);
+    void loadSession(unsigned int id);
 
     void setName(std::string name);
     void setBirthTime(std::string time);
     void setFirstWordTime(std::string time);
     void setPersonalityTraits(std::vector<std::string> traits);
 
-    std::string getPersonalityTrait(int i);
+    std::string getPersonalityTrait(unsigned int i);
     std::vector<std::string> getPersonalityTraits();
     std::string getName();
     std::string getBirthTime();

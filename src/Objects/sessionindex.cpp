@@ -12,34 +12,21 @@ SessionIndex::SessionIndex(std::string str)
     loadFromString(str);
 }
 
-SessionIndex::SessionIndex(int id)
+SessionIndex::SessionIndex(unsigned int id)
 {
     std::string str = intToString(id);
-    int i = 0;
     loadFromString(str);
 }
 
 void SessionIndex::loadFromString(std::string str)
 {
-    std::string str_date = str.substr(0,8);
     std::string str_id = str.substr(8,str.size()-7);
 
-    int y,m,d;
-
-    std::string str_y,str_m,str_d;
-    str_y = str_date.substr(0,4);
-    str_m = str_date.substr(4,2);
-    str_d = str_date.substr(6,2);
-
-    y = atoi(str_y.c_str());
-    m = atoi(str_m.c_str());
-    d = atoi(str_d.c_str());
-
-    this->date.setDate(y,m,d);
+    this->date = dateFromString(str);
     this->id = atoi(str_id.c_str());
 }
 
-SessionIndex::SessionIndex(QDate date, int id)
+SessionIndex::SessionIndex(QDate date, unsigned int id)
 {
     this->date = date;
     this->id = id;
@@ -50,7 +37,7 @@ void SessionIndex::setDate(QDate date)
     this->date = date;
 }
 
-void SessionIndex::setID(int id)
+void SessionIndex::setID(unsigned int id)
 {
     this->id = id;
 }

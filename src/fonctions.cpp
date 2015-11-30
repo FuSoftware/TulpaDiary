@@ -3,6 +3,48 @@
 #include <QFile>
 #include <QDir>
 
+QDate dateFromString(std::string str)
+{
+    std::string str_date = str.substr(0,8);
+
+    int y,m,d;
+
+    std::string str_y,str_m,str_d;
+    str_y = str_date.substr(0,4);
+    str_m = str_date.substr(4,2);
+    str_d = str_date.substr(6,2);
+
+    y = atoi(str_y.c_str());
+    m = atoi(str_m.c_str());
+    d = atoi(str_d.c_str());
+
+    QDate date;
+
+    date.setDate(y,m,d);
+
+    return date;
+}
+
+bool createMainDirs()
+{
+    outputInfo(L_DEBUG,"Creating main dirs");
+    QStringList dir_list;
+    dir_list << DATA_FOLDER << SESSION_FOLDER << TULPA_FOLDER;
+    for(int i=0; i<dir_list.size();i++)
+    {
+        checkFolder(dir_list.at(i).toStdString());
+        QDir dir(dir_list.at(i));
+
+        if(!dir.exists())
+        {
+            outputInfo(L_VERBOSE,"Dir " + dir_list.at(i).toStdString() + " could not be created");
+            return false;
+        }
+    }
+    outputInfo(L_VERBOSE,"Main dirs existing");
+    return true;
+}
+
 void checkFolder(std::string path)
 {
     QDir dirCache1(path.c_str());
@@ -19,7 +61,7 @@ bool checkFile(std::string path)
 
 
 /*Conversion*/
-std::string intToString(int i)
+std::string intToString(unsigned int i)
 {
     std::stringstream ss;
     std::string s;
@@ -176,10 +218,10 @@ QUrl findRedirection(QUrl url)
 bool fexists(const char *filename)
 {
   std::ifstream ifile(filename);
-  return ifile;
+  return ifile.is_open();
 }
 
-bool sessionExists(QDate date, int id)
+bool sessionExists(QDate date, unsigned int id)
 {
     QString file = QString(SESSION_FOLDER) + date.toString(DATE_TYPE) + QString("/") + QString::number(id) + QString(".json");
 

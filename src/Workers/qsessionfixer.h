@@ -38,8 +38,8 @@ private:
     QString json_path;
 
     SessionIndex *session_index;
-    int index;
-    int index_max;
+    unsigned int index;
+    unsigned int index_max;
     bool f;
 };
 

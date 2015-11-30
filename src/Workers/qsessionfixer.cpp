@@ -62,7 +62,7 @@ void QSessionFixer::fixLostSession(QDate date)
 
     checkFolder(folder.toStdString());
 
-    int id = dateFolder.entryList().size();
+    unsigned int id = dateFolder.entryList().size();
 
     while(sessionExists(date,id))
     {
