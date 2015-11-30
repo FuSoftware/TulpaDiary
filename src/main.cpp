@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 
     if(!createMainDirs())
     {
-        QMessageBox::critical(0,"Error",QString("Couldn't create the app directories. Please check the permissions at :\n") + QString(DATA_FOLDER));
+        QMessageBox::critical(0,"Error",QString("Couldn't create the app directories. Please check the permissions at :\n") + QDir(DATA_FOLDER).absolutePath());
         exit(15);
     }
 

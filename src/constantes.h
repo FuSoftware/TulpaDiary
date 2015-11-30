@@ -1,16 +1,13 @@
 #ifndef CONSTANTES
 #define CONSTANTES
 
-#define DEBUG 1
+#define DEBUG 0
 
 #define APP_NAME "TulpaDiary"
-<<<<<<< HEAD
-#define VERSION "0.3.1.2"
-=======
 #define VERSION "0.3.2.0"
->>>>>>> origin/master
 
 #define DATE_TYPE "yyyyMMdd"
+#define DATE_TYPE_OUTPUT "dd/MM/yyyy"
 
 /*Folders*/
 #if DEBUG

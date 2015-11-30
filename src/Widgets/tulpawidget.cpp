@@ -107,17 +107,20 @@ void TulpaWidget::reload()
 
 void TulpaWidget::loadTulpa(QString name)
 {
-    tulpa = new Tulpa(name.toStdString());
+    if(!name.isEmpty())
+    {
+        tulpa = new Tulpa(name.toStdString());
 
-    loadInfos();
-    loadPersonality();
-    loadSessions();
-    stats->loadTulpa(tulpa);
+        loadInfos();
+        loadPersonality();
+        loadSessions();
+        stats->loadTulpa(tulpa);
+    }
 }
 
 void TulpaWidget::loadInfos()
 {
-    labelsInfo[TULPA_BIRTH]->setText(QString("Birth : ") + QString(tulpa->getBirthTime().c_str()));
+    labelsInfo[TULPA_BIRTH]->setText(QString("Birth : ") + dateFromString(tulpa->getBirthTime()).toString(DATE_TYPE_OUTPUT));
 
     labelsInfo[TULPA_FIRST_WORD]->setText(QString("First Word : ") + QString(tulpa->getFirstWordTime().c_str()));
 
