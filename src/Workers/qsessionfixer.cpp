@@ -15,14 +15,16 @@ void QSessionFixer::fix()
     index_max = dir->entryList().size();
     index = 0;
 
-    if(dir->entryList().size() != 0)
+    if(index_max != 0)
     {
+        //If sessions are found, the program will attempt to fix them
         QMessageBox::information(this,"Session Fixer","You will now have to fix the previously set sessions.\nPlease select the corresponding date of each session in the calendar that will show up.\nSorry for the inconvenience.");
         loadLostSession(dir->entryInfoList().at(index).absoluteFilePath());
         terminate();
     }
     else
     {
+        //If not, it'll just check their IDs and fix them
         fixSessionIds();
         terminate();
     }
@@ -45,16 +47,21 @@ void QSessionFixer::terminate()
 void QSessionFixer::loadLostSession(QString path)
 {
     json_path = path;
-    root = loadJSONFile(path.toStdString().c_str());
-    calendar->setData(root);
+    root = loadJSONFile(path.toStdString().c_str()); //Loads the JSON file
+    calendar->setData(root); //Loads a calendar with the session's data
     calendar->show();
 }
 
 void QSessionFixer::fixLostSession(QDate date)
 {
+    /*!
+     * \param date : the new date to apply to the current session
+     */
+
     outputInfo(L_DEBUG,"Finding and fixing lost sessions");
-    calendar->hide();
-    root["date"] = date.toString(DATE_TYPE).toStdString();
+    calendar->hide();//Hides the Claendar widget
+
+    root["date"] = date.toString(DATE_TYPE).toStdString();//Replaces the old date with the new one
 
     QString folder = QString(SESSION_FOLDER) + date.toString(DATE_TYPE) + QString("/");
     QDir dateFolder(folder);
@@ -142,13 +149,18 @@ void QSessionFixer::fixSessionIds()
 
 void QSessionFixer::fixID(Session* session, QString folder_id)
 {
+    /*!
+     * \param session   : The session to edit
+     * \param folder_id : The name of the folder (its datetamp)
+     */
+
     std::string id = folder_id.toStdString() + intToString(session->getId());
-    session_index = new SessionIndex(id);
+    session_index = new SessionIndex(id); //Loads the session
 
     if(session->hasTulpa())
     {
         Tulpa tulpa(session->getTulpaName());
-        tulpa.addSessions(*session);
+        tulpa.addSessions(*session);//Adds the session to the tulpa's list
         tulpa.save();
         qDebug() << "Added session" << atoi(id.c_str()) << "to" << tulpa.getName().c_str();
     }

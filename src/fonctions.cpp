@@ -5,14 +5,20 @@
 
 QDate dateFromString(std::string str)
 {
+    /*!
+     * \param Formatted string following the DATE_TYPE format
+     *
+     * \return QDate object holding the requested date from str
+     */
+
     std::string str_date = str.substr(0,8);
 
     int y,m,d;
 
     std::string str_y,str_m,str_d;
-    str_y = str_date.substr(0,4);
-    str_m = str_date.substr(4,2);
-    str_d = str_date.substr(6,2);
+    str_y = str_date.substr(0,4); //First 4 chars for year
+    str_m = str_date.substr(4,2); //Next 2 chars for month
+    str_d = str_date.substr(6,2); //Next 2 chars for day
 
     y = atoi(str_y.c_str());
     m = atoi(str_m.c_str());
@@ -27,6 +33,12 @@ QDate dateFromString(std::string str)
 
 bool createMainDirs()
 {
+    /*!
+     * Generates the dirs the program needs to work
+     *
+     * \return true if the folders were created, false if there's an error (Linux permissions for example)
+     */
+
     outputInfo(L_DEBUG,"Creating main dirs");
     QStringList dir_list;
     dir_list << DATA_FOLDER << SESSION_FOLDER << TULPA_FOLDER;
@@ -47,6 +59,7 @@ bool createMainDirs()
 
 void checkFolder(std::string path)
 {
+    //Checks if the folder at "path" exists. If not, creates it
     QDir dirCache1(path.c_str());
     if (!dirCache1.exists()) {
         dirCache1.mkpath(".");
@@ -55,6 +68,7 @@ void checkFolder(std::string path)
 
 bool checkFile(std::string path)
 {
+    //Checks if the file at "path" exists. Returns existance
     QFile file(path.c_str());
     return file.exists();
 }
@@ -148,6 +162,7 @@ void outputInfo(int type, std::string data)
 
 std::string getFolder(std::string file_path)
 {
+    //Returns the folder path of the specified file
     return file_path.substr(0,file_path.find_last_of("/"));
 }
 
@@ -172,7 +187,7 @@ int downloadFile(const char* url, const char* file, bool override)
 
 
         request.setUrl(file_url.toString());
-        request.setRawHeader("User-Agent", "QBooru");
+        request.setRawHeader("User-Agent", "TulpaDiary");
         //request.setRawHeader("Referer", referer);
 
         QNetworkReply* m_pReply = manager->get(request);
@@ -206,11 +221,11 @@ int downloadFile(const char* url, const char* file, bool override)
 QUrl findRedirection(QUrl url)
 {
     QNAMRedirect redirect;
-    redirect.processUrl(url.toString());
+    redirect.processUrl(url.toString()); //Starts processing the URL
 
     QEventLoop loop;
     QObject::connect(&redirect, SIGNAL(finished()),&loop, SLOT(quit()));
-    loop.exec();
+    loop.exec(); //Waits until the process is over
 
     return redirect.getLastRedirect();
 }

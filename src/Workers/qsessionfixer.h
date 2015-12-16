@@ -1,3 +1,9 @@
+/*QSessionFixer
+ *
+ * This class fixes, on startup, the session and tulpa files
+ * It ensures that they are properly located, and updates them from one version to another.
+ */
+
 #ifndef QSESSIONFIXER_H
 #define QSESSIONFIXER_H
 
