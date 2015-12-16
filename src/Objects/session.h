@@ -60,7 +60,7 @@ private:
     std::string description;
     std::string date;
     std::string writing_log;
-    int duration;
+    int duration; //Minutes
 
     std::string local_file;
 

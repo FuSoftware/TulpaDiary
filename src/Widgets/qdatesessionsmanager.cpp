@@ -95,14 +95,14 @@ QWidget *QDateSessionsManager::loadSession(Session *session, unsigned int i)
     return widget;
 }
 
-void QDateSessionsManager::editSession(unsigned int i)
+void QDateSessionsManager::editSession(int i)
 {
     QEditSession *w = new QEditSession(sessions.at(i),true,0);
     w->show();
     connect(w,SIGNAL(finished()),this,SLOT(loadUI()));
 }
 
-void QDateSessionsManager::deleteSession(unsigned int i)
+void QDateSessionsManager::deleteSession(int i)
 {
     QString text = QString("Are you sure you want to delete the session :\n") + QString(this->sessions.at(i)->toString().c_str());
     int reponse = QMessageBox::question(this,"Delete file",text);

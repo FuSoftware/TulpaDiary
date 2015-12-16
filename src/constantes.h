@@ -1,10 +1,10 @@
 #ifndef CONSTANTES
 #define CONSTANTES
 
-#define DEBUG 0
+#define DEBUG 1
 
 #define APP_NAME "TulpaDiary"
-#define VERSION "0.3.2.0"
+#define VERSION "0.3.3.0"
 
 #define DATE_TYPE "yyyyMMdd"
 #define DATE_TYPE_OUTPUT "dd/MM/yyyy"
