@@ -4,6 +4,7 @@ QEditSession::QEditSession(Session *session, bool load, QWidget *parent) : QWidg
 {
     outputInfo(L_DEBUG,"Loading Session Editor");
     this->session = session;
+    timer_running = false;
 
     mainLayout = new QVBoxLayout;
 
@@ -15,13 +16,15 @@ QEditSession::QEditSession(Session *session, bool load, QWidget *parent) : QWidg
 
     loadTulpas();
 
-    lineEditTimeSpent = new QTimeEdit(this);
+    timeEditTimeSpent = new QTimeEdit(this);
     textEditDescription = new QTextEdit(this);
     textEditWriting = new QTextEdit(this);
     pushButtonSave = new QPushButton("Save",this);
     pushButtonDate = new QPushButton("Edit date",this);
 
     pushButtonTimer = new QPushButton("Start",this);
+
+    timeEditTimeSpent->setDisplayFormat("hh:mm");
 
 
     for(unsigned int i=0;i<ACTION_END_LIST;i++)
@@ -36,6 +39,7 @@ QEditSession::QEditSession(Session *session, bool load, QWidget *parent) : QWidg
     {
         groupBox[i] = new QGroupBox(titles[i],this);
         layout[i] = new QVBoxLayout;
+        QHBoxLayout *layoutH = new QHBoxLayout;
 
         switch(i)
         {
@@ -49,10 +53,9 @@ QEditSession::QEditSession(Session *session, bool load, QWidget *parent) : QWidg
             layout[i]->addWidget(pushButtonDate);
             break;
         case 4:
-            delete layout[i];
-            layout[i] = new QHBoxLayout;
-            layout[i]->addWidget(lineEditTimeSpent);
-            layout[i]->addWidget(pushButtonTimer);
+            layoutH->addWidget(timeEditTimeSpent);
+            layoutH->addWidget(pushButtonTimer);
+            layout[i]->addLayout(layoutH);
             break;
         case 5:
             layout[i]->addWidget(textEditDescription);
@@ -70,6 +73,7 @@ QEditSession::QEditSession(Session *session, bool load, QWidget *parent) : QWidg
 
     connect(pushButtonSave,SIGNAL(clicked()),this,SLOT(save()));
     connect(pushButtonDate,SIGNAL(clicked()),this,SLOT(changeDate()));
+    connect(pushButtonTimer,SIGNAL(clicked()),this,SLOT(timerInput()));
 
     calendar = new QCalendarWidget(0);
     connect(calendar,SIGNAL(activated(QDate)),this,SLOT(changeDateSelected(QDate)));
@@ -87,7 +91,7 @@ void QEditSession::loadSession()
 
     comboBoxName->setCurrentText(session->getTulpaName().c_str());
     comboBoxAction->setCurrentIndex(session->getTypeId());
-    lineEditTimeSpent->setTime(duration);
+    timeEditTimeSpent->setTime(duration);
     textEditDescription->setText(session->getDescription().c_str());
     textEditWriting->setText(session->getWritingLog().c_str());
 }
@@ -121,7 +125,7 @@ void QEditSession::save()
 {
     session->setTypeID(comboBoxAction->currentIndex());
     session->setTulpaName(comboBoxName->currentText().toStdString());
-    session->setDuration(lineEditTimeSpent->time().hour()*60 + lineEditTimeSpent->time().minute()); //Seconds are not used. Duration saved in minutes
+    session->setDuration(timeEditTimeSpent->time().hour()*60 + timeEditTimeSpent->time().minute()); //Seconds are not used. Duration saved in minutes
     session->setDescription(textEditDescription->toPlainText().toStdString());
     session->setWritingLog(textEditWriting->toPlainText().toStdString());
 
@@ -151,4 +155,33 @@ void QEditSession::changeDateSelected(QDate date)
     session->setFilePath(new_path.toStdString());
     session->save();
     file.rename(new_path);
+}
+
+void QEditSession::timerInput()
+{
+    if(timer_running)
+    {
+        //Stopping
+        pushButtonTimer->setText("Start");
+        timer->stop();
+    }
+    else
+    {
+        //Starting
+        pushButtonTimer->setText("Stop");
+        timer = new QTimer(this);
+        connect(timer,SIGNAL(timeout()),this,SLOT(updateTimeEdit()));
+        timer->start(60*1000); //60s * 1000ms
+    }
+
+    timer_running = !timer_running;
+}
+
+void QEditSession::updateTimeEdit()
+{
+    //Increases the TimeEdit by 1 minute (every 3600s)
+    QTime oldTime = timeEditTimeSpent->time();
+    QTime newTime;
+    newTime.setHMS(oldTime.hour(),oldTime.minute()+1,0,0);
+    timeEditTimeSpent->setTime(newTime);
 }

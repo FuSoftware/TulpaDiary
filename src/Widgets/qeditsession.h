@@ -30,6 +30,8 @@ public slots:
     void save();
     void changeDate();
     void changeDateSelected(QDate date);
+    void timerInput();
+    void updateTimeEdit();
 
 private:
 
@@ -44,7 +46,7 @@ private:
 
     QPushButton *pushButtonTimer;
 
-    QTimeEdit *lineEditTimeSpent;
+    QTimeEdit *timeEditTimeSpent;
 
     QTextEdit *textEditDescription;
 
@@ -57,7 +59,8 @@ private:
 
     QCalendarWidget *calendar;
 
-    QTime timer;
+    QTimer *timer;
+    bool timer_running;
 };
 
 
