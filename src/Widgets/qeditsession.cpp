@@ -15,11 +15,13 @@ QEditSession::QEditSession(Session *session, bool load, QWidget *parent) : QWidg
 
     loadTulpas();
 
-    lineEditTimeSpent = new QLineEdit(this);
+    lineEditTimeSpent = new QTimeEdit(this);
     textEditDescription = new QTextEdit(this);
     textEditWriting = new QTextEdit(this);
     pushButtonSave = new QPushButton("Save",this);
     pushButtonDate = new QPushButton("Edit date",this);
+
+    pushButtonTimer = new QPushButton("Start",this);
 
 
     for(unsigned int i=0;i<ACTION_END_LIST;i++)
@@ -34,7 +36,6 @@ QEditSession::QEditSession(Session *session, bool load, QWidget *parent) : QWidg
     {
         groupBox[i] = new QGroupBox(titles[i],this);
         layout[i] = new QVBoxLayout;
-        groupBox[i]->setLayout(layout[i]);
 
         switch(i)
         {
@@ -48,7 +49,10 @@ QEditSession::QEditSession(Session *session, bool load, QWidget *parent) : QWidg
             layout[i]->addWidget(pushButtonDate);
             break;
         case 4:
+            delete layout[i];
+            layout[i] = new QHBoxLayout;
             layout[i]->addWidget(lineEditTimeSpent);
+            layout[i]->addWidget(pushButtonTimer);
             break;
         case 5:
             layout[i]->addWidget(textEditDescription);
@@ -58,6 +62,7 @@ QEditSession::QEditSession(Session *session, bool load, QWidget *parent) : QWidg
             break;
         }
 
+        groupBox[i]->setLayout(layout[i]);
         mainLayout->addWidget(groupBox[i]);
     }
     mainLayout->addWidget(pushButtonSave);
@@ -77,9 +82,12 @@ QEditSession::QEditSession(Session *session, bool load, QWidget *parent) : QWidg
 
 void QEditSession::loadSession()
 {
+    QTime duration;
+    duration.setHMS(session->getDuration()/60,session->getDuration()%60,0,0); //Loading duration
+
     comboBoxName->setCurrentText(session->getTulpaName().c_str());
     comboBoxAction->setCurrentIndex(session->getTypeId());
-    lineEditTimeSpent->setText(QString::number(session->getDuration()));
+    lineEditTimeSpent->setTime(duration);
     textEditDescription->setText(session->getDescription().c_str());
     textEditWriting->setText(session->getWritingLog().c_str());
 }
@@ -113,7 +121,7 @@ void QEditSession::save()
 {
     session->setTypeID(comboBoxAction->currentIndex());
     session->setTulpaName(comboBoxName->currentText().toStdString());
-    session->setDuration(lineEditTimeSpent->text().toInt());
+    session->setDuration(lineEditTimeSpent->time().hour()*60 + lineEditTimeSpent->time().minute()); //Seconds are not used. Duration saved in minutes
     session->setDescription(textEditDescription->toPlainText().toStdString());
     session->setWritingLog(textEditWriting->toPlainText().toStdString());
 

@@ -26,8 +26,8 @@ signals:
 
 public slots:
     void loadUI();
-    void editSession(unsigned int i);
-    void deleteSession(unsigned int i);
+    void editSession(int i);
+    void deleteSession(int i);
     void addSession();
 
 private:

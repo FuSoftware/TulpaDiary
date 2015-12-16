@@ -41,7 +41,10 @@ private:
     QComboBox *comboBoxName;
     QComboBox *comboBoxAction;
     QPushButton *pushButtonDate;
-    QLineEdit *lineEditTimeSpent;
+
+    QPushButton *pushButtonTimer;
+
+    QTimeEdit *lineEditTimeSpent;
 
     QTextEdit *textEditDescription;
 
@@ -53,6 +56,8 @@ private:
     bool loaded_from_file;
 
     QCalendarWidget *calendar;
+
+    QTime timer;
 };
 
 
