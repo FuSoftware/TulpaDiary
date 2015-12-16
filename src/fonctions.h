@@ -20,6 +20,7 @@
 #include <QEventLoop>
 
 #include <QDate>
+#include <QUrlQuery>
 
 #include "Workers/qnamredirect.h"
 QDate dateFromString(std::string str);
@@ -40,6 +41,7 @@ bool checkFile(std::string path);
 
 std::string getFolder(std::string file_path);
 
+int contactServer();
 int downloadFile(const char* url, const char* file, bool override);
 QUrl findRedirection(QUrl url);
 

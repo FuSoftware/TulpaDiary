@@ -166,6 +166,46 @@ std::string getFolder(std::string file_path)
     return file_path.substr(0,file_path.find_last_of("/"));
 }
 
+int contactServer()
+{
+    //Contacts the remote server to update the database regarding the number of users.
+    //It sends the version of the software. The PHP page uses the IP and the current time
+
+    //I might use a similar way in the future to remotely save your tulpas so you'll just have to sync an account.
+
+    QNetworkAccessManager *manager = new QNetworkAccessManager;
+    QNetworkRequest request;
+
+    QUrl url("http://florentuguet.net16.net/tulpadiary/software.php");
+    QUrlQuery params;
+
+    request.setUrl(url.toString());
+    request.setRawHeader("User-Agent", "TulpaDiary");
+
+    params.addQueryItem("version", QString(VERSION));
+
+    if(DEBUG){params.addQueryItem("type", "debug");}
+    else{params.addQueryItem("type", "release");}
+
+    QByteArray data;
+    data.append(params.toString()); //POST params
+
+    QNetworkReply* m_pReply = manager->post(request,data);
+
+    //QEventLoop loop;
+    //QObject::connect(m_pReply, SIGNAL(finished()),&loop, SLOT(quit()));
+    //loop.exec();
+
+    if(m_pReply->error() != QNetworkReply::NoError)
+    {
+        QMessageBox::warning(0,"Error",QString("Error while contacting the main server ")+ QString(" : ") + m_pReply->errorString());
+        return m_pReply->error();
+    }
+
+    return 0;
+
+}
+
 int downloadFile(const char* url, const char* file, bool override)
 {
     QString referer = "Dummy Ref";
