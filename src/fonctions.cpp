@@ -181,8 +181,10 @@ int contactServer()
 
     request.setUrl(url.toString());
     request.setRawHeader("User-Agent", "TulpaDiary");
+    request.setRawHeader("Content-Type","application/x-www-form-urlencoded");
 
     params.addQueryItem("version", QString(VERSION));
+    params.addQueryItem("build", QString::number(BUILD));
 
     if(DEBUG){params.addQueryItem("type", "debug");}
     else{params.addQueryItem("type", "release");}
@@ -192,21 +194,51 @@ int contactServer()
 
     QNetworkReply* m_pReply = manager->post(request,data);
 
-    //QEventLoop loop;
-    //QObject::connect(m_pReply, SIGNAL(finished()),&loop, SLOT(quit()));
-    //loop.exec();
+    QEventLoop loop;
+    QObject::connect(m_pReply, SIGNAL(finished()),&loop, SLOT(quit()));
+    loop.exec();
+
 
     if(m_pReply->error() != QNetworkReply::NoError)
     {
-        QMessageBox::warning(0,"Error",QString("Error while contacting the main server ")+ QString(" : ") + m_pReply->errorString());
+        outputInfo(L_ERROR,std::string("Error when sending version : ") + m_pReply->errorString().toStdString());
         return m_pReply->error();
+    }
+
+    bool ok;
+
+    QString lastBuild_s = QString(m_pReply->readLine(0)).split('\r').at(0);
+    QString version = QString(m_pReply->readLine(0)).split('\r').at(0);
+    qDebug() << "Build" << lastBuild_s << "Version" << version; //Easily breackable, may need to be checked.
+    int lastBuild = lastBuild_s.toInt(&ok);
+
+    if(!ok)
+    {
+        //Logs the HTTP response
+        outputInfo(L_ERROR,std::string("Retrieved build isn't a String : ") + lastBuild_s.toStdString());
+        outputInfo(L_ERROR,std::string("Full string : ") + QString(m_pReply->readAll()).toStdString());
+    }
+    else
+    {
+        //Checks the update status
+        if(lastBuild > BUILD)
+        {
+            //Update needed
+            int rep = QMessageBox::question(0,"Update","Version " + version  + " is available, do you wish to update ?\nYou will need to restart the software after the update is complete.\nChangelog: https://community.tulpa.info/thread-software-tulpadiary", QMessageBox ::Yes | QMessageBox::No);
+            if (rep == QMessageBox::Yes)
+            {
+                QDownloadWidget *down = new QDownloadWidget(0,true);
+                down->show();
+                down->download(URL_EXECUTABLE,EXECUTABLE_DL,true);
+            }
+        }
     }
 
     return 0;
 
 }
 
-int downloadFile(const char* url, const char* file, bool override)
+int downloadFile(const char* url, const char* file, bool override, bool error_box)
 {
     QString referer = "Dummy Ref";
 
@@ -228,6 +260,7 @@ int downloadFile(const char* url, const char* file, bool override)
 
         request.setUrl(file_url.toString());
         request.setRawHeader("User-Agent", "TulpaDiary");
+        request.setRawHeader("Content-Type","application/x-www-form-urlencoded");
         //request.setRawHeader("Referer", referer);
 
         QNetworkReply* m_pReply = manager->get(request);
@@ -240,7 +273,7 @@ int downloadFile(const char* url, const char* file, bool override)
 
         if(m_pReply->error() != QNetworkReply::NoError)
         {
-            QMessageBox::critical(0,"Error",QString("Error while downloading ") + QString(url) + QString(" : ") + m_pReply->errorString());
+            if(error_box){QMessageBox::critical(0,"Error",QString("Error while downloading ") + QString(url) + QString(" : ") + m_pReply->errorString());}
             return m_pReply->error();
         }
 
@@ -248,11 +281,11 @@ int downloadFile(const char* url, const char* file, bool override)
 
         QString file_s = QString(file);
 
-        QFile file(file_s);
+        QFile savefile(file_s);
 
-        file.open(QIODevice::WriteOnly);
-        file.write(m_pReply->readAll());
-        file.close();
+        savefile.open(QIODevice::WriteOnly);
+        savefile.write(m_pReply->readAll());
+        savefile.close();
 
         return 0;
     }

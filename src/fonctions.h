@@ -23,6 +23,7 @@
 #include <QUrlQuery>
 
 #include "Workers/qnamredirect.h"
+#include "Widgets/qdownloadwidget.h"
 QDate dateFromString(std::string str);
 
 bool createMainDirs();
@@ -42,7 +43,7 @@ bool checkFile(std::string path);
 std::string getFolder(std::string file_path);
 
 int contactServer();
-int downloadFile(const char* url, const char* file, bool override);
+int downloadFile(const char* url, const char* file, bool override = true, bool error_box = false);
 QUrl findRedirection(QUrl url);
 
 bool fexists(const char *filename);
