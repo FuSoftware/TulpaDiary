@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.4 - 2015/12/18
+- Added an updating process
+- Added a function linked to my website to count app using
+- Commented part of the source
+
 ## 0.3.2 - 2015/11/31
 - Fixed how dates are handled for tulpas
 - Checks the folders on startup
