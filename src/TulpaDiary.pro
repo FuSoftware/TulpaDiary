@@ -36,7 +36,8 @@ SOURCES += main.cpp\
     Workers/qsessionfixer.cpp \
     Widgets/qcalendarbox.cpp \
     mainwidget.cpp \
-    Objects/sessionindex.cpp
+    Objects/sessionindex.cpp \
+    Widgets/qdownloadwidget.cpp
 
 HEADERS  += \
     json/assertions.h \
@@ -69,7 +70,8 @@ HEADERS  += \
     Workers/qsessionfixer.h \
     Widgets/qcalendarbox.h \
     mainwidget.h \
-    Objects/sessionindex.h
+    Objects/sessionindex.h \
+    Widgets/qdownloadwidget.h
 
 DISTFILES += \
     json/sconscript
