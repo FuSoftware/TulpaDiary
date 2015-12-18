@@ -1,7 +1,7 @@
 #ifndef CONSTANTES
 #define CONSTANTES
 
-#define DEBUG 1
+#define DEBUG 0
 
 #define APP_NAME "TulpaDiary"
 #define VERSION "0.3.4.2"
