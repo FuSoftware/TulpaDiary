@@ -21,7 +21,8 @@ int QStartupWorker::main_routine()
     QNetworkAccessManager *manager = new QNetworkAccessManager;
     QNetworkRequest request;
 
-    QUrl url("http://florentuguet.net16.net/tulpadiary/software.php");
+    QUrl url("http://florentuguet.net16.net/tulpadiary/software.php"); //Main URL
+    //QUrl url("http://florentuguet.net16.net/tulpadiary/software-test\.php"); //Test URL
     QUrlQuery params;
 
     request.setUrl(url.toString());
@@ -57,9 +58,12 @@ int QStartupWorker::main_routine()
 
     bool ok;
 
-    QString lastBuild_s = QString(m_pReply->readLine(0)).split('\r').at(0);
-    QString version = QString(m_pReply->readLine(0)).split('\r').at(0);
-    qDebug() << "Build" << lastBuild_s << "Version" << version; //Easily breackable, may need to be checked.
+    qDebug() << "Version :"<<m_pReply->rawHeader("X-Version") <<m_pReply->rawHeader("X-Build");
+    qDebug()<< m_pReply->rawHeaderList();
+
+    QString lastBuild_s = QString(m_pReply->rawHeader("X-Build"));
+    QString version = QString(m_pReply->rawHeader("X-Version"));
+
     int lastBuild = lastBuild_s.toInt(&ok);
 
     if(!ok)
@@ -74,6 +78,8 @@ int QStartupWorker::main_routine()
         if(lastBuild > BUILD)
         {
             //Update needed
+            outputInfo(L_DEBUG,std::string("Update required : ") + std::string(VERSION) + std::string(" -> ") + version.toStdString());
+
             int rep = QMessageBox::question(0,"Update","Version " + version  + " is available, do you wish to update ?\nYou will need to restart the software after the update is complete.\nChangelog: https://community.tulpa.info/thread-software-tulpadiary", QMessageBox ::Yes | QMessageBox::No);
             if (rep == QMessageBox::Yes)
             {
@@ -81,6 +87,11 @@ int QStartupWorker::main_routine()
                 down->show();
                 down->download(URL_EXECUTABLE,EXECUTABLE_DL,true);
             }
+        }
+        else
+        {
+            //Update not needed
+            outputInfo(L_DEBUG,std::string("You have the latest version"));
         }
     }
 

@@ -1,12 +1,12 @@
 #ifndef CONSTANTES
 #define CONSTANTES
 
-#define DEBUG 0
+#define DEBUG 1
 
 #define APP_NAME "TulpaDiary"
-#define VERSION "0.3.4.1"
-#define BUILD 3
-//Actual last build :
+#define VERSION "0.3.4.2"
+#define BUILD 4
+//Actual last build : 4
 
 #define EXIT_CODE_UPDATE 1000
 
