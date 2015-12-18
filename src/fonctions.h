@@ -42,7 +42,6 @@ bool checkFile(std::string path);
 
 std::string getFolder(std::string file_path);
 
-int contactServer();
 int downloadFile(const char* url, const char* file, bool override = true, bool error_box = false);
 QUrl findRedirection(QUrl url);
 

@@ -7,11 +7,14 @@
 #include "Widgets/schedulewidget.h"
 #include "Widgets/qguidelist.h"
 
+#include "Workers/qstartupworker.h"
+
 class MainWidget : public QWidget
 {
     Q_OBJECT
 public:
     MainWidget(QWidget *parent = 0);
+    void startup_load();
 
 signals:
 

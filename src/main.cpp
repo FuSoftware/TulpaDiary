@@ -23,7 +23,6 @@ int main(int argc, char *argv[])
 
     qDebug() << "Starting the software";
     QApplication a(argc, argv);
-    contactServer();
 
     if(!createMainDirs())
     {
